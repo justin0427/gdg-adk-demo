@@ -1,0 +1,50 @@
+<svg viewBox="0 0 860 330" xmlns="http://www.w3.org/2000/svg" font-family="'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif">
+  <rect width="860" height="330" fill="white"/>
+  <text x="20" y="28" font-size="16" font-weight="700" fill="#202124">get_org_detail("Cyberdyne") 裡，每個 IP 的請求都打去哪裡</text>
+
+  <!-- 正常 IP 1 -->
+  <text x="20" y="76" font-size="14" font-weight="700" fill="#202124">198.51.100.50</text>
+  <text x="20" y="94" font-size="12" fill="#5f6368">62 次請求</text>
+  <g>
+    <rect x="200" y="62" width="100" height="34" fill="#4285f4"/>
+    <rect x="300" y="62" width="87" height="34" fill="#34a853"/>
+    <rect x="387" y="62" width="87" height="34" fill="#fbbc04"/>
+    <rect x="474" y="62" width="87" height="34" fill="#9aa0a6"/>
+    <rect x="561" y="62" width="68" height="34" fill="#7986cb"/>
+    <rect x="629" y="62" width="171" height="34" fill="#e0e0e0"/>
+  </g>
+  <text x="500" y="112" text-anchor="middle" font-size="12" fill="#5f6368">分散在 8 種不同 API（notifications／logout／profile／static…）</text>
+
+  <!-- 正常 IP 2 -->
+  <text x="20" y="146" font-size="14" font-weight="700" fill="#202124">198.51.100.51</text>
+  <text x="20" y="164" font-size="12" fill="#5f6368">56 次請求</text>
+  <g>
+    <rect x="200" y="132" width="86" height="34" fill="#ff8a65"/>
+    <rect x="286" y="132" width="86" height="34" fill="#34a853"/>
+    <rect x="372" y="132" width="75" height="34" fill="#ea4335"/>
+    <rect x="447" y="132" width="75" height="34" fill="#9aa0a6"/>
+    <rect x="522" y="132" width="75" height="34" fill="#8d6e63"/>
+    <rect x="597" y="132" width="203" height="34" fill="#e0e0e0"/>
+  </g>
+  <text x="500" y="182" text-anchor="middle" font-size="12" fill="#5f6368">也有打過 /api/login（7 次）——但只佔它全部請求的一小部分</text>
+
+  <!-- 正常 IP 3 -->
+  <text x="20" y="216" font-size="14" font-weight="700" fill="#202124">198.51.100.52</text>
+  <text x="20" y="234" font-size="12" fill="#5f6368">62 次請求</text>
+  <g>
+    <rect x="200" y="202" width="116" height="34" fill="#4285f4"/>
+    <rect x="316" y="202" width="87" height="34" fill="#26a69a"/>
+    <rect x="403" y="202" width="58" height="34" fill="#7986cb"/>
+    <rect x="461" y="202" width="58" height="34" fill="#34a853"/>
+    <rect x="519" y="202" width="58" height="34" fill="#9aa0a6"/>
+    <rect x="577" y="202" width="223" height="34" fill="#e0e0e0"/>
+  </g>
+  <text x="500" y="252" text-anchor="middle" font-size="12" fill="#5f6368">一樣分散在 8 種不同 API，沒有哪一種特別多</text>
+
+  <!-- 攻擊 IP -->
+  <rect x="14" y="264" width="792" height="56" rx="10" fill="#fdecea" stroke="#ea4335" stroke-width="2"/>
+  <text x="26" y="286" font-size="14" font-weight="700" fill="#c5221f">198.51.100.77</text>
+  <text x="26" y="304" font-size="12" fill="#c5221f">47 次請求</text>
+  <rect x="200" y="272" width="600" height="34" fill="#ea4335"/>
+  <text x="500" y="294" text-anchor="middle" font-size="14" font-weight="700" fill="white">/api/login × 47（100%）</text>
+</svg>

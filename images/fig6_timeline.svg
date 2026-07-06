@@ -1,0 +1,72 @@
+<svg viewBox="0 0 860 400" xmlns="http://www.w3.org/2000/svg" font-family="'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif">
+  <rect width="860" height="400" fill="white"/>
+
+  <!-- 上半：Acme 爆量攻擊，60 秒內塞爆 -->
+  <text x="30" y="34" font-size="17" font-weight="700" fill="#202124">Acme：爆量攻擊（會被抓到）</text>
+  <text x="30" y="56" font-size="13" fill="#5f6368">200 次請求，全部塞進 60 秒——任一個 60 秒視窗都超過門檻</text>
+
+  <!-- 視窗範圍：只畫虛線框，不填色，深色模式才不會卡出一塊淺色 -->
+  <rect x="54" y="120" width="182" height="36" rx="8" fill="none" stroke="#ea4335" stroke-width="1.6" stroke-dasharray="4 3"/>
+
+  <line x1="60" y1="138" x2="800" y2="138" stroke="#dadce0" stroke-width="2"/>
+
+  <!-- 30 個緊密相連的點，代表 60 秒內塞滿的 200 次請求 -->
+  <g fill="#ea4335">
+    <circle cx="66" cy="138" r="3.2"/><circle cx="72" cy="138" r="3.2"/><circle cx="78" cy="138" r="3.2"/>
+    <circle cx="84" cy="138" r="3.2"/><circle cx="90" cy="138" r="3.2"/><circle cx="96" cy="138" r="3.2"/>
+    <circle cx="102" cy="138" r="3.2"/><circle cx="108" cy="138" r="3.2"/><circle cx="114" cy="138" r="3.2"/>
+    <circle cx="120" cy="138" r="3.2"/><circle cx="126" cy="138" r="3.2"/><circle cx="132" cy="138" r="3.2"/>
+    <circle cx="138" cy="138" r="3.2"/><circle cx="144" cy="138" r="3.2"/><circle cx="150" cy="138" r="3.2"/>
+    <circle cx="156" cy="138" r="3.2"/><circle cx="162" cy="138" r="3.2"/><circle cx="168" cy="138" r="3.2"/>
+    <circle cx="174" cy="138" r="3.2"/><circle cx="180" cy="138" r="3.2"/><circle cx="186" cy="138" r="3.2"/>
+    <circle cx="192" cy="138" r="3.2"/><circle cx="198" cy="138" r="3.2"/><circle cx="204" cy="138" r="3.2"/>
+    <circle cx="210" cy="138" r="3.2"/><circle cx="216" cy="138" r="3.2"/><circle cx="222" cy="138" r="3.2"/>
+    <circle cx="228" cy="138" r="3.2"/>
+  </g>
+
+  <text x="60" y="176" font-size="12" fill="#9aa0a6">05:30:00</text>
+  <text x="800" y="176" font-size="12" fill="#9aa0a6" text-anchor="end">05:31:00</text>
+
+  <text x="145" y="198" text-anchor="middle" font-size="13" font-weight="700" fill="#ea4335">60 秒視窗：200 次請求</text>
+  <text x="145" y="216" text-anchor="middle" font-size="12" fill="#ea4335">遠超過門檻（50 次）→ 觸發爆量規則</text>
+
+  <rect x="650" y="14" width="150" height="42" rx="21" fill="none" stroke="#ea4335" stroke-width="1.6"/>
+  <text x="725" y="40" text-anchor="middle" font-size="15" font-weight="700" fill="#c5221f">🔴 被抓到</text>
+
+  <line x1="0" y1="240" x2="860" y2="240" stroke="#dadce0" stroke-width="1" stroke-dasharray="4 4"/>
+
+  <!-- 下半：Cyberdyne 低頻長時間攻擊，3 小時內慢慢打 -->
+  <text x="30" y="272" font-size="17" font-weight="700" fill="#202124">Cyberdyne：低頻長時間攻擊（規則抓不到）</text>
+  <text x="30" y="294" font-size="13" fill="#5f6368">47 次請求，拖了 3 小時——任何 60 秒視窗滑過去都只有 1 次</text>
+
+  <!-- 兩個示範用的 60 秒視窗框，精準置中在實際的點座標上（cx=155 / cx=532） -->
+  <rect x="144" y="328" width="22" height="24" rx="4" fill="none" stroke="#5f6368" stroke-width="1.3" stroke-dasharray="3 2"/>
+  <rect x="521" y="328" width="22" height="24" rx="4" fill="none" stroke="#5f6368" stroke-width="1.3" stroke-dasharray="3 2"/>
+
+  <line x1="60" y1="340" x2="800" y2="340" stroke="#dadce0" stroke-width="2"/>
+
+  <!-- 47 個稀疏分散的請求點，鋪滿整條 3 小時的時間軸 -->
+  <g fill="#34a853">
+    <circle cx="66" cy="340" r="3.5"/><circle cx="88" cy="340" r="3.5"/><circle cx="110" cy="340" r="3.5"/>
+    <circle cx="133" cy="340" r="3.5"/><circle cx="155" cy="340" r="3.5"/><circle cx="177" cy="340" r="3.5"/>
+    <circle cx="199" cy="340" r="3.5"/><circle cx="221" cy="340" r="3.5"/><circle cx="244" cy="340" r="3.5"/>
+    <circle cx="266" cy="340" r="3.5"/><circle cx="288" cy="340" r="3.5"/><circle cx="310" cy="340" r="3.5"/>
+    <circle cx="332" cy="340" r="3.5"/><circle cx="355" cy="340" r="3.5"/><circle cx="377" cy="340" r="3.5"/>
+    <circle cx="399" cy="340" r="3.5"/><circle cx="421" cy="340" r="3.5"/><circle cx="443" cy="340" r="3.5"/>
+    <circle cx="466" cy="340" r="3.5"/><circle cx="488" cy="340" r="3.5"/><circle cx="510" cy="340" r="3.5"/>
+    <circle cx="532" cy="340" r="3.5"/><circle cx="554" cy="340" r="3.5"/><circle cx="577" cy="340" r="3.5"/>
+    <circle cx="599" cy="340" r="3.5"/><circle cx="621" cy="340" r="3.5"/><circle cx="643" cy="340" r="3.5"/>
+    <circle cx="665" cy="340" r="3.5"/><circle cx="688" cy="340" r="3.5"/><circle cx="710" cy="340" r="3.5"/>
+    <circle cx="732" cy="340" r="3.5"/><circle cx="754" cy="340" r="3.5"/><circle cx="776" cy="340" r="3.5"/>
+    <circle cx="794" cy="340" r="3.5"/>
+  </g>
+
+  <text x="155" y="320" text-anchor="middle" font-size="11" fill="#5f6368">60 秒視窗：1 次</text>
+  <text x="532" y="320" text-anchor="middle" font-size="11" fill="#5f6368">60 秒視窗：1 次</text>
+
+  <text x="60" y="368" font-size="12" fill="#9aa0a6">09:00</text>
+  <text x="800" y="368" font-size="12" fill="#9aa0a6" text-anchor="end">12:00</text>
+
+  <rect x="650" y="252" width="150" height="42" rx="21" fill="none" stroke="#34a853" stroke-width="1.6"/>
+  <text x="725" y="278" text-anchor="middle" font-size="15" font-weight="700" fill="#188038">🟢 沒被抓到</text>
+</svg>
