@@ -130,8 +130,8 @@ ul.task-list{list-style:none;padding-left:0}
 <hr/>
 <h2>步驟 2：安裝 Ollama、下載模型（最花時間，請現在就做）</h2>
 <p><a href="https://ollama.com/">Ollama</a> 是讓你在自己電腦上跑 AI 模型的工具，到 <a href="https://ollama.com/download">ollama.com/download</a> 下載安裝——用上面的切換鈕選你的作業系統，看對應的安裝步驟：</p>
-<div class="os-variant" data-os="mac"><p>需要 macOS 14（Sonoma）以上。下載下來是一個 <code>.dmg</code> 檔，打開它會跳出一個磁碟視窗，把裡面的 <code>Ollama.app</code> 拖進「應用程式」（Applications）資料夾，再打開它。第一次開啟可能會跳出視窗要求把命令列工具連結加進系統路徑，按同意即可；選單列（畫面最上方）會出現一個小圖示，代表 Ollama 已經在背景執行。</p></div>
-<div class="os-variant" data-os="windows"><p>下載下來是 <code>OllamaSetup.exe</code>，雙擊執行，照畫面指示一路「下一步」安裝完成——不需要系統管理員權限，學校電腦也能裝。它會自動把 <code>ollama</code> 加進使用者的系統路徑，並在背景執行（工作列會有圖示）。<strong>安裝完後請重新開一個新的終端機視窗</strong>，路徑設定才會生效；如果安裝過程跳出 Windows 防火牆詢問，選「允許」即可。</p></div>
+<div class="os-variant" data-os="mac"><p>需要 macOS 14（Sonoma）以上。下載下來是一個 <code>.dmg</code> 檔，打開它會跳出一個磁碟視窗，把裡面的 <code>Ollama.app</code> 拖進「應用程式」（Applications）資料夾，再打開它。第一次開啟可能會跳出視窗要求把命令列工具連結加進系統路徑，按同意即可；選單列（畫面最上方）會出現一個小圖示，代表 Ollama 已經在背景執行。詳細步驟可參考<a href="https://docs.ollama.com/macos">官方文件</a>。</p></div>
+<div class="os-variant" data-os="windows"><p>下載下來是 <code>OllamaSetup.exe</code>，雙擊執行，照畫面指示一路「下一步」安裝完成——不需要系統管理員權限，學校電腦也能裝。它會自動把 <code>ollama</code> 加進使用者的系統路徑，並在背景執行（工作列會有圖示）。<strong>安裝完後請重新開一個新的終端機視窗</strong>，路徑設定才會生效；如果安裝過程跳出 Windows 防火牆詢問，選「允許」即可。詳細步驟可參考<a href="https://docs.ollama.com/windows">官方文件</a>。</p></div>
 <p>裝好後在終端機打 <code>ollama --version</code> 應該會看到版本號，代表裝好了。接著執行：</p>
 <div class="codeblock"><div class="codehead"><span class="codehead-label">終端機</span><button class="copy-btn" type="button" aria-label="複製程式碼">複製</button></div><pre class="code"><code><span class="tok-cmd">ollama</span> pull gemma4:e4b</code></pre></div>
 <p>這個模型大約 9.6GB，麻煩趁現在網路好的時候（例如在家裡）先下載完成。現場如果大家一起下載，網路很容易撐不住，你會卡在這一步乾等，錯過後面實際動手的時間。</p>
