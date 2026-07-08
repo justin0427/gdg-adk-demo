@@ -23,8 +23,7 @@ Agent →（呼叫 get_org_detail）→ 產出含風險評分、可疑 IP 剖析
 ## 這個 repo 給誰用
 
 - **只想跑跑看 demo**：照下面「快速開始」做就好。
-- **要自己上課教**：先看 [`COURSE.md`](COURSE.md)（文案與課程總覽）→ [`TEACHING_GUIDE.md`](TEACHING_GUIDE.md)（60 分鐘逐段帶班劇本，含課前信範本、時間調度、卡關對策）。
-- **要發給學員**：發 `STUDENT_GUIDE.html`（不是 `.md`）——它是排版好的自包含網頁，含語法高亮、複製鈕、深淺色自動切換，直接用瀏覽器打開即可。
+- **要發給學員**：課前發 `PREWORK.html`（環境準備），上課發 `STUDENT_GUIDE.html`（不是 `.md`）——這兩份都是排版好的自包含網頁，含語法高亮、複製鈕、深淺色自動切換，直接用瀏覽器打開即可。
 
 ---
 
@@ -73,13 +72,13 @@ python reset.py done    # 隨時換回完成版——卡住、改壞了、跟不
 
 ## 現場同步講義（內網 live server）
 
-上課時想讓學生看同一份網頁講義，並且你一存檔、學生端就自動刷新，由講師電腦開一個內網 live server：
+上課時想讓學生看同一份網頁講義，並且你一存檔、學生端就自動刷新，由你的電腦開一個內網 live server：
 
 ```bash
 python3 live_server.py --host 0.0.0.0 --port 8008
 ```
 
-查講師電腦的內網 IP（Wi-Fi 用 `en0`，有線網路可能要改 `en1`）：
+查你自己電腦的內網 IP（Wi-Fi 用 `en0`，有線網路可能要改 `en1`）：
 
 ```bash
 ipconfig getifaddr en0
@@ -87,18 +86,19 @@ ipconfig getifaddr en0
 
 假設查到 `192.168.1.23`，學生就開 `http://192.168.1.23:8008`。
 
-`live_server.py` 會監看 `STUDENT_GUIDE.md`、`STUDENT_GUIDE_REVEAL.md`、`build_html.py` 和 `images/`；存檔就自動重建對應的 HTML，已打開講義的瀏覽器會自動刷新。
+`live_server.py` 會監看 `STUDENT_GUIDE.md`、`STUDENT_GUIDE_REVEAL.md`、`PREWORK.md`、`build_html.py` 和 `images/`；存檔就自動重建對應的 HTML，已打開講義的瀏覽器會自動刷新。
 
-這裡總共有**兩個網頁**：
+這裡總共有**三個獨立網頁**，各自互不相干：
 
 | 網址 | 內容 |
 |---|---|
-| `http://講師IP:8008/`（或 `/STUDENT_GUIDE.html`） | 學生從頭到尾看的主要講義，不含任何劇透 |
-| `http://講師IP:8008/STUDENT_GUIDE_REVEAL.html` | 內容跟主講義一模一樣，只多了「第五間公司 Cyberdyne 其實被攻擊了」的揭曉章節 |
+| `http://你的IP:8008/PREWORK.html` | **上課前**先發給學員的前置作業——裝環境、下載模型、跑健檢 |
+| `http://你的IP:8008/`（或 `/STUDENT_GUIDE.html`） | 學生從頭到尾看的主要講義，不含任何劇透 |
+| `http://你的IP:8008/STUDENT_GUIDE_REVEAL.html` | 內容跟主講義一模一樣，只多了「第五間公司 Cyberdyne 其實被攻擊了」的揭曉章節 |
 
-想公布解答時，把揭曉頁網址發給學生，或現場投影切過去即可，同樣會即時刷新。
+課前把 `PREWORK.html` 網址發給學員；上課用主講義；想公布解答時，把揭曉頁網址發給學生或現場投影切過去即可。三個網址都會即時刷新。
 
-注意：講師和學生必須在同一個 Wi-Fi / LAN；macOS 防火牆跳出提示時要允許 Python 接受連線；學校 Wi-Fi 若開了 AP isolation／client isolation 導致學生連不到，改用 `cloudflared tunnel --url http://localhost:8008` 或 `ngrok http 8008`；上課前務必先用手機連同一個 Wi-Fi 測試過。
+注意：你和學生必須在同一個 Wi-Fi / LAN；macOS 防火牆跳出提示時要允許 Python 接受連線；學校 Wi-Fi 若開了 AP isolation／client isolation 導致學生連不到，改用 `cloudflared tunnel --url http://localhost:8008` 或 `ngrok http 8008`；上課前務必先用手機連同一個 Wi-Fi 測試過。
 
 ---
 
@@ -113,7 +113,7 @@ ipconfig getifaddr en0
 | `OLLAMA_MODEL`    | `gemma4:e4b` | 要用的模型（需支援 tool calling；備用：`qwen2.5:7b` / `llama3.1:8b`） |
 
 ```bash
-export OLLAMA_API_BASE="http://<講師伺服器>:11434/v1"
+export OLLAMA_API_BASE="http://<共用伺服器>:11434/v1"
 export OLLAMA_MODEL="gemma4:e4b"
 ```
 
@@ -135,8 +135,7 @@ export OLLAMA_MODEL="gemma4:e4b"
 
 ```
 gdg-adk-demo/
-├── COURSE.md                  課程文案與總覽
-├── TEACHING_GUIDE.md           講師 60 分鐘帶班劇本
+├── PREWORK.md / .html          上課前置作業（獨立頁面：裝環境、下載模型、跑健檢）
 ├── STUDENT_GUIDE.md / .html    學員實作講義（發 .html；不含劇透）
 ├── STUDENT_GUIDE_REVEAL.md / .html   同一份講義＋揭曉章節（獨立頁面）
 ├── build_html.py               把 .md 講義轉成排版好的自包含 .html

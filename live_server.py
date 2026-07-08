@@ -26,6 +26,7 @@ BUILD_SCRIPT = os.path.join(HERE, "build_html.py")
 PAGES = [
     ("STUDENT_GUIDE.md", "STUDENT_GUIDE.html"),
     ("STUDENT_GUIDE_REVEAL.md", "STUDENT_GUIDE_REVEAL.html"),
+    ("PREWORK.md", "PREWORK.html"),
 ]
 DEFAULT_HTML = PAGES[0][1]  # 首頁 "/" 導向的頁面，維持原本行為不變
 
@@ -148,7 +149,7 @@ def main():
     server = ThreadingHTTPServer((args.host, args.port), LiveHandler)
     print(f"live guide: http://{args.host}:{args.port}")
     print(f"pages: {', '.join(html_name for _, html_name in PAGES)}")
-    print("edit STUDENT_GUIDE.md / STUDENT_GUIDE_REVEAL.md / images / build_html.py; connected browsers reload automatically")
+    print("edit STUDENT_GUIDE.md / STUDENT_GUIDE_REVEAL.md / PREWORK.md / images / build_html.py; connected browsers reload automatically")
     server.serve_forever()
 
 

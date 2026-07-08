@@ -251,6 +251,12 @@ th{background:var(--th);font-weight:600}
 hr{border:none;border-top:1px solid var(--border);margin:2.6em 0}
 ul,ol{padding-left:1.6em}
 li{margin:.4em 0}
+ul.task-list{list-style:none;padding-left:0}
+.task-item{margin:.6em 0}
+.task-item label{display:flex;align-items:flex-start;gap:10px;cursor:pointer}
+.task-item input[type="checkbox"]{flex:none;width:18px;height:18px;margin-top:.25em;
+  accent-color:var(--blue);cursor:pointer}
+.task-item input[type="checkbox"]:checked ~ span{color:var(--muted);text-decoration:line-through}
 .callout{border-radius:8px;padding:12px 16px;margin:1.2em 0}
 .callout p{margin:0}
 .callout.info{background:var(--callout-info);border-left:4px solid var(--blue)}
@@ -329,6 +335,19 @@ COPY_JS = """
       });
     });
   });
+
+  // 打勾狀態存在 localStorage，同一台裝置關掉分頁、隔天再回來還記得勾到哪。
+  var page = location.pathname.split('/').pop() || 'index';
+  document.querySelectorAll('.task-item input[type="checkbox"]').forEach(function(cb, idx){
+    var span = cb.nextElementSibling;
+    var key = 'gdg-task:' + page + ':' + (span ? span.textContent.trim() : idx);
+    var saved = localStorage.getItem(key);
+    if(saved === '1') cb.checked = true;
+    else if(saved === '0') cb.checked = false;
+    cb.addEventListener('change', function(){
+      localStorage.setItem(key, cb.checked ? '1' : '0');
+    });
+  });
 })();
 </script>
 """
@@ -393,6 +412,21 @@ def convert(md):
     while i < n:
         line = lines[i]
 
+        # OS 專屬段落：::: mac ... ::: 或 ::: windows ... :::
+        # 內容照一般 Markdown 處理（可以有粗體、清單、連結…），外面包一層 os-variant，
+        # 跟程式碼區塊共用同一顆頁面頂端的 macOS/Windows 切換鈕，不用另外寫兩段文字堆在一起。
+        m = re.match(r'^:::\s*(mac|windows)\s*$', line)
+        if m:
+            os_tag = m.group(1)
+            i += 1
+            inner = []
+            while i < n and lines[i].strip() != ':::':
+                inner.append(lines[i]); i += 1
+            i += 1  # 跳過結尾的 :::
+            inner_html = convert('\n'.join(inner))
+            out.append(f'<div class="os-variant" data-os="{os_tag}">{inner_html}</div>')
+            continue
+
         # 程式碼區塊（含語法高亮 + 檔頭標籤 + 複製鈕）
         # fence 格式：```lang 目標標籤（GitHub 只取第一個字做高亮，其餘忽略，相容安全）
         if line.startswith('```'):
@@ -455,7 +489,20 @@ def convert(md):
             items = []
             while i < n and re.match(r'^\s*[-*]\s+', lines[i]):
                 items.append(re.sub(r'^\s*[-*]\s+', '', lines[i])); i += 1
-            out.append('<ul>' + ''.join(f'<li>{inline(x)}</li>' for x in items) + '</ul>')
+            is_task_list = any(re.match(r'^\[[ xX]\]\s+', x) for x in items)
+            li_parts = []
+            for x in items:
+                m = re.match(r'^\[([ xX])\]\s+(.*)$', x)
+                if m:
+                    checked = ' checked' if m.group(1).lower() == 'x' else ''
+                    li_parts.append(
+                        '<li class="task-item"><label>'
+                        f'<input type="checkbox"{checked}><span>{inline(m.group(2))}</span>'
+                        '</label></li>')
+                else:
+                    li_parts.append(f'<li>{inline(x)}</li>')
+            cls = ' class="task-list"' if is_task_list else ''
+            out.append(f'<ul{cls}>' + ''.join(li_parts) + '</ul>')
             continue
 
         if re.match(r'^\s*\d+\.\s+', line):
@@ -502,15 +549,16 @@ def main():
     title = title_m.group(1) if title_m else "教學講義"
     body = convert(md)
 
-    # OS 切換列只在頁面真的有 mac/windows 雙版指令時才顯示（避免無意義的空按鈕）
+    # OS 切換列只在頁面真的有 mac/windows 雙版內容時才顯示（避免無意義的空按鈕）
+    # has-os＝程式碼區塊有雙版本；os-variant＝::: mac / ::: windows 包起來的一般段落
     os_switch = (
-        '<div class="os-switch" aria-label="選擇指令作業系統">'
-        '<span class="os-switch-label">終端機指令</span>'
+        '<div class="os-switch" aria-label="選擇你的作業系統">'
+        '<span class="os-switch-label">作業系統</span>'
         '<div class="os-switch-options">'
         '<button class="os-btn" type="button" data-os="mac" aria-pressed="false">macOS</button>'
         '<button class="os-btn" type="button" data-os="windows" aria-pressed="false">Windows</button>'
         '</div></div>\n'
-    ) if 'has-os' in body else ''
+    ) if ('has-os' in body or 'os-variant' in body) else ''
 
     doc = (
         '<!DOCTYPE html>\n<html lang="zh-Hant">\n<head>\n'

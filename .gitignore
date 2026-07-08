@@ -5,3 +5,7 @@ __pycache__/
 .env
 .venv/
 venv/
+
+# 這兩份是給我自己用的（課程文案／帶班劇本），不進這個公開 repo
+COURSE.md
+TEACHING_GUIDE.md
