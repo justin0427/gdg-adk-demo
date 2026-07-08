@@ -9,3 +9,9 @@ venv/
 # 這兩份是給我自己用的（課程文案／帶班劇本），不進這個公開 repo
 COURSE.md
 TEACHING_GUIDE.md
+
+# 實作講義本體（含揭曉章節）改由實驗室主機內網發布，不進這個公開 repo
+STUDENT_GUIDE.md
+STUDENT_GUIDE.html
+STUDENT_GUIDE_REVEAL.md
+STUDENT_GUIDE_REVEAL.html

@@ -56,9 +56,9 @@ ollama pull gemma4:e4b
 
 ## 步驟 3：下載課程專案
 
-（課程 repo 網址：＿＿＿＿＿＿＿＿＿＿）
+點這個連結直接下載 zip：[gdg-adk-demo.zip](https://github.com/justin0427/gdg-adk-demo/archive/refs/heads/main.zip)（或到 [github.com/justin0427/gdg-adk-demo](https://github.com/justin0427/gdg-adk-demo) 點右上角綠色「Code」按鈕 →「Download ZIP」）。
 
-下載後解壓縮，用終端機切換到專案資料夾（`gdg-adk-demo/`）。之後的指令都要在這個資料夾裡執行。
+下載後解壓縮，資料夾名稱會是 `gdg-adk-demo-main`，用終端機切換進去——之後的指令都要在這個資料夾裡執行（資料夾名稱不影響操作，不用特別改名）。
 
 ---
 

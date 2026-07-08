@@ -23,13 +23,13 @@ Agent →（呼叫 get_org_detail）→ 產出含風險評分、可疑 IP 剖析
 ## 這個 repo 給誰用
 
 - **只想跑跑看 demo**：照下面「快速開始」做就好。
-- **要發給學員**：課前發 `PREWORK.html`（環境準備），上課發 `STUDENT_GUIDE.html`（不是 `.md`）——這兩份都是排版好的自包含網頁，含語法高亮、複製鈕、深淺色自動切換，直接用瀏覽器打開即可。
+- **要發給學員**：課前發 `PREWORK.html`（環境準備、下載這個 repo）——排版好的自包含網頁，含語法高亮、複製鈕、深淺色自動切換，直接用瀏覽器打開即可。上課用的實作講義不放在這個公開 repo 裡，現場改用內網主機發布。
 
 ---
 
 ## 快速開始
 
-以下指令以 Windows 為主；macOS 請把 `python` 換成 `python3`，把 `pip install ...` 換成 `python3 -m pip install ...`，並用 `source .venv/bin/activate` 啟動虛擬環境（`STUDENT_GUIDE.html` 裡每個指令方塊都有 macOS / Windows 切換鈕，照著切就好）。
+以下指令以 Windows 為主；macOS 請把 `python` 換成 `python3`，把 `pip install ...` 換成 `python3 -m pip install ...`，並用 `source .venv/bin/activate` 啟動虛擬環境（`PREWORK.html` 裡每個指令方塊都有 macOS / Windows 切換鈕，照著切就好）。
 
 ```bash
 # 1. 建立並啟動虛擬環境，然後安裝套件
@@ -61,7 +61,7 @@ adk web
 
 ## 想從零練習打造 Agent（code-along）
 
-repo 裡的 `soc_agent/agent.py` 預設是**完成版**，方便直接執行。想跟著 `STUDENT_GUIDE.html` 從零打造，用 `reset.py` 切換：
+repo 裡的 `soc_agent/agent.py` 預設是**完成版**，方便直接執行。想跟著上課講義從零打造，用 `reset.py` 切換：
 
 ```bash
 python reset.py start   # 換成空白骨架（含分節標記，照講義一節一節貼），原檔自動備份成 .bak
@@ -86,17 +86,9 @@ ipconfig getifaddr en0
 
 假設查到 `192.168.1.23`，學生就開 `http://192.168.1.23:8008`。
 
-`live_server.py` 會監看 `STUDENT_GUIDE.md`、`STUDENT_GUIDE_REVEAL.md`、`PREWORK.md`、`build_html.py` 和 `images/`；存檔就自動重建對應的 HTML，已打開講義的瀏覽器會自動刷新。
+這個公開 repo 裡預設只有 `PREWORK.md` 這一份講義；正式上課用的實作講義是另外準備、不放在這個 repo 裡的，把講義檔案放進資料夾、在 `live_server.py` 開頭的 `PAGES` 列表加一行，存檔就會自動重建對應的 HTML，已打開講義的瀏覽器會自動刷新。
 
-這裡總共有**三個獨立網頁**，各自互不相干：
-
-| 網址 | 內容 |
-|---|---|
-| `http://你的IP:8008/PREWORK.html` | **上課前**先發給學員的前置作業——裝環境、下載模型、跑健檢 |
-| `http://你的IP:8008/`（或 `/STUDENT_GUIDE.html`） | 學生從頭到尾看的主要講義，不含任何劇透 |
-| `http://你的IP:8008/STUDENT_GUIDE_REVEAL.html` | 內容跟主講義一模一樣，只多了「第五間公司 Cyberdyne 其實被攻擊了」的揭曉章節 |
-
-課前把 `PREWORK.html` 網址發給學員；上課用主講義；想公布解答時，把揭曉頁網址發給學生或現場投影切過去即可。三個網址都會即時刷新。
+假設查到你電腦的內網 IP 是 `192.168.1.23`，學生課前開 `http://192.168.1.23:8008/PREWORK.html` 就能看到即時更新的前置作業頁面。
 
 注意：你和學生必須在同一個 Wi-Fi / LAN；macOS 防火牆跳出提示時要允許 Python 接受連線；學校 Wi-Fi 若開了 AP isolation／client isolation 導致學生連不到，改用 `cloudflared tunnel --url http://localhost:8008` 或 `ngrok http 8008`；上課前務必先用手機連同一個 Wi-Fi 測試過。
 
@@ -136,8 +128,6 @@ export OLLAMA_MODEL="gemma4:e4b"
 ```
 gdg-adk-demo/
 ├── PREWORK.md / .html          上課前置作業（獨立頁面：裝環境、下載模型、跑健檢）
-├── STUDENT_GUIDE.md / .html    學員實作講義（發 .html；不含劇透）
-├── STUDENT_GUIDE_REVEAL.md / .html   同一份講義＋揭曉章節（獨立頁面）
 ├── build_html.py               把 .md 講義轉成排版好的自包含 .html
 ├── live_server.py              內網即時刷新伺服器（教室現場用）
 ├── check_env.py                一鍵環境健檢（六項）
