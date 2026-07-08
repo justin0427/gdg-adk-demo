@@ -10,6 +10,6 @@ GDG on Campus 的一小時實作課程：用 **Google ADK (Agent Development Kit
 
 上課前請先完成前置作業，把環境準備好（裝 Python、裝 Ollama、下載模型）：
 
-### [前往前置作業 →](PREWORK.html)
+### [前往前置作業 →](docs/PREWORK.html)
 
 想直接看完整專案原始碼，到 [github.com/justin0427/gdg-adk-demo](https://github.com/justin0427/gdg-adk-demo) 逛逛即可。

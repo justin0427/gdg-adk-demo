@@ -1,8 +1,8 @@
 """
 live_server.py - local live-reload server for the student guide.
 
-Usage:
-    python3 live_server.py --host 0.0.0.0 --port 8008
+Usage (從 repo 根目錄執行):
+    python3 tools/live_server.py --host 0.0.0.0 --port 8008
 
 Then expose it with a tunnel, for example:
     cloudflared tunnel --url http://localhost:8008
@@ -19,19 +19,21 @@ from urllib.parse import urlparse
 
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)  # repo 根目錄（這支腳本放在 tools/ 底下，網站內容都在根目錄）
 BUILD_SCRIPT = os.path.join(HERE, "build_html.py")
 
-# 每一份要即時同步的講義：(來源 Markdown, 產出 HTML)。
+# 每一份要即時同步的頁面：(來源 Markdown, 產出 HTML)，路徑都相對於 repo 根目錄。
 # 要再加一頁（例如正式上課用的講義，不在這個公開 repo 裡），就在這裡多加一組 tuple，
 # 監看／重建／路由會自動套用，不用改其他地方。
 PAGES = [
-    ("PREWORK.md", "PREWORK.html"),
+    ("index.md", "index.html"),
+    ("docs/PREWORK.md", "docs/PREWORK.html"),
 ]
-DEFAULT_HTML = PAGES[0][1]  # 首頁 "/" 導向的頁面，維持原本行為不變
+DEFAULT_HTML = "index.html"  # 首頁 "/" 導向的頁面
 
-WATCH_PATHS = [os.path.join(HERE, md) for md, _ in PAGES] + [
+WATCH_PATHS = [os.path.join(ROOT, md) for md, _ in PAGES] + [
     BUILD_SCRIPT,
-    os.path.join(HERE, "images"),
+    os.path.join(ROOT, "images"),
 ]
 
 build_version = str(time.time())
@@ -75,7 +77,7 @@ def snapshot():
 def build():
     global build_version
     for md_name, _ in PAGES:
-        subprocess.run([sys.executable, BUILD_SCRIPT, md_name], cwd=HERE, check=True)
+        subprocess.run([sys.executable, BUILD_SCRIPT, md_name], cwd=ROOT, check=True)
     with build_lock:
         build_version = str(time.time())
     print("rebuilt: " + ", ".join(html_name for _, html_name in PAGES))
@@ -96,7 +98,7 @@ def watch_loop():
 
 class LiveHandler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, directory=HERE, **kwargs)
+        super().__init__(*args, directory=ROOT, **kwargs)
 
     def do_GET(self):
         parsed = urlparse(self.path)
@@ -121,7 +123,7 @@ class LiveHandler(SimpleHTTPRequestHandler):
             html_name = None
 
         if html_name:
-            with open(os.path.join(HERE, html_name), encoding="utf-8") as f:
+            with open(os.path.join(ROOT, html_name), encoding="utf-8") as f:
                 html = f.read()
             html = html.replace("</body>", LIVE_RELOAD_SNIPPET + "\n</body>")
             body = html.encode("utf-8")
@@ -148,7 +150,7 @@ def main():
     server = ThreadingHTTPServer((args.host, args.port), LiveHandler)
     print(f"live guide: http://{args.host}:{args.port}")
     print(f"pages: {', '.join(html_name for _, html_name in PAGES)}")
-    print("edit PREWORK.md / images / build_html.py; connected browsers reload automatically")
+    print("edit index.md / docs/PREWORK.md / images / build_html.py; connected browsers reload automatically")
     server.serve_forever()
 
 

@@ -75,7 +75,7 @@ python reset.py done    # 隨時換回完成版——卡住、改壞了、跟不
 上課時想讓學生看同一份網頁講義，並且你一存檔、學生端就自動刷新，由你的電腦開一個內網 live server：
 
 ```bash
-python3 live_server.py --host 0.0.0.0 --port 8008
+python3 tools/live_server.py --host 0.0.0.0 --port 8008
 ```
 
 查你自己電腦的內網 IP（Wi-Fi 用 `en0`，有線網路可能要改 `en1`）：
@@ -86,9 +86,9 @@ ipconfig getifaddr en0
 
 假設查到 `192.168.1.23`，學生就開 `http://192.168.1.23:8008`。
 
-這個公開 repo 裡預設只有 `PREWORK.md` 這一份講義；正式上課用的實作講義是另外準備、不放在這個 repo 裡的，把講義檔案放進資料夾、在 `live_server.py` 開頭的 `PAGES` 列表加一行，存檔就會自動重建對應的 HTML，已打開講義的瀏覽器會自動刷新。
+這個公開 repo 裡預設只有 `index.md`（首頁）和 `docs/PREWORK.md` 兩份頁面；正式上課用的實作講義是另外準備、不放在這個 repo 裡的，把講義檔案放進資料夾、在 `tools/live_server.py` 開頭的 `PAGES` 列表加一行，存檔就會自動重建對應的 HTML，已打開講義的瀏覽器會自動刷新。
 
-假設查到你電腦的內網 IP 是 `192.168.1.23`，學生課前開 `http://192.168.1.23:8008/PREWORK.html` 就能看到即時更新的前置作業頁面。
+假設查到你電腦的內網 IP 是 `192.168.1.23`，學生課前開 `http://192.168.1.23:8008/docs/PREWORK.html` 就能看到即時更新的前置作業頁面（開根網址 `http://192.168.1.23:8008/` 則是首頁）。
 
 注意：你和學生必須在同一個 Wi-Fi / LAN；macOS 防火牆跳出提示時要允許 Python 接受連線；學校 Wi-Fi 若開了 AP isolation／client isolation 導致學生連不到，改用 `cloudflared tunnel --url http://localhost:8008` 或 `ngrok http 8008`；上課前務必先用手機連同一個 Wi-Fi 測試過。
 
@@ -127,9 +127,13 @@ export OLLAMA_MODEL="gemma4:e4b"
 
 ```
 gdg-adk-demo/
-├── PREWORK.md / .html          上課前置作業（獨立頁面：裝環境、下載模型、跑健檢）
-├── build_html.py               把 .md 講義轉成排版好的自包含 .html
-├── live_server.py              內網即時刷新伺服器（教室現場用）
+├── index.md / .html            首頁（GitHub Pages 入口，必須留在根目錄）
+├── .nojekyll                   告訴 GitHub Pages 不要用 Jekyll 處理，直接吃自製的 HTML
+├── docs/
+│   └── PREWORK.md / .html      上課前置作業（獨立頁面：裝環境、下載模型、跑健檢）
+├── tools/
+│   ├── build_html.py           把 .md 講義轉成排版好的自包含 .html
+│   └── live_server.py          內網即時刷新伺服器（教室現場用）
 ├── check_env.py                一鍵環境健檢（六項）
 ├── reset.py                    骨架 / 完成版切換（code-along 用）
 ├── generate_logs.py            產生合成日誌（含 5 種攻擊，其中 1 種現有規則抓不到）

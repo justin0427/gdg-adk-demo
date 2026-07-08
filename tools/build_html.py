@@ -6,9 +6,9 @@ build_html.py — 把 Markdown 講義轉成排版精美、單一檔案的教學�
 - 程式碼區塊：建置期做語法高亮（純 Python，無外部函式庫，離線可用），右上角有複製鈕。
 - 深/淺色：跟隨系統設定 (prefers-color-scheme)。
 
-用法：
-    python build_html.py                產生 STUDENT_GUIDE.html（預設）
-    python build_html.py 其他檔案.md    產生 其他檔案.html（同一套樣式與功能）
+用法（從 repo 根目錄執行，路徑相對於執行時的所在目錄）：
+    python tools/build_html.py docs/PREWORK.md   產生 docs/PREWORK.html
+    python tools/build_html.py index.md          產生 index.html
 """
 
 import os
@@ -17,7 +17,8 @@ import sys
 import html
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-IMG_DIR = os.path.join(HERE, "images")
+ROOT = os.path.dirname(HERE)  # repo 根目錄（這支腳本放在 tools/ 底下）
+IMG_DIR = os.path.join(ROOT, "images")
 
 
 # =============================================================================
@@ -539,8 +540,10 @@ def convert(md):
 
 
 def main():
-    src_name = sys.argv[1] if len(sys.argv) > 1 else "STUDENT_GUIDE.md"
-    md_path = os.path.join(HERE, src_name)
+    if len(sys.argv) < 2:
+        sys.exit("用法：python tools/build_html.py <來源.md>（例如 docs/PREWORK.md，路徑相對於目前所在目錄）")
+    src_name = sys.argv[1]
+    md_path = os.path.abspath(src_name)
     out_path = os.path.splitext(md_path)[0] + ".html"
 
     with open(md_path, encoding="utf-8") as f:
