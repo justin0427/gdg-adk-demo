@@ -82,7 +82,8 @@ def main():
         ok = False
     check(f"LLM 服務連線（{BASE}）", ok,
           "本機：開一個終端機執行 ollama serve；"
-          "用共用伺服器：export OLLAMA_API_BASE=\"http://<講師給的網址>/v1\"")
+          "用共用伺服器：export OLLAMA_API_BASE=\"http://<講師給的網址>:11434/v1\""
+          "（注意要寫 port，沒寫 port 預設會打到 80，連不到 Ollama）")
 
     if models:
         family = MODEL.split(":")[0].lower()
