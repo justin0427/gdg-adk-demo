@@ -35,6 +35,14 @@ a:hover{text-decoration:underline}
 strong{font-weight:700}
 code{background:var(--icode-bg);border-radius:4px;padding:.12em .42em;font-size:.88em;color:var(--icode);
   font-family:'SF Mono',Consolas,'Roboto Mono',monospace}
+code[data-tip]{cursor:help;border-bottom:1px dashed var(--muted);position:relative}
+code[data-tip]:hover::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 9px);
+  transform:translateX(-50%);background:var(--ink);color:var(--page);padding:7px 11px;border-radius:7px;
+  font-size:13px;font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',system-ui,sans-serif;
+  font-weight:400;white-space:normal;width:max-content;max-width:260px;line-height:1.5;
+  box-shadow:0 4px 16px rgba(0,0,0,.28);z-index:20}
+code[data-tip]:hover::before{content:"";position:absolute;left:50%;bottom:calc(100% + 3px);
+  transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--ink);z-index:20}
 .codeblock{margin:1.1em 0}
 .codehead{display:flex;justify-content:space-between;align-items:center;gap:12px;
   background:#171b24;border-radius:10px 10px 0 0;padding:7px 14px;border-bottom:1px solid #2a3040}
@@ -121,7 +129,11 @@ ul.task-list{list-style:none;padding-left:0}
 <p>做完這份前置作業，你會有：一個裝好課程套件的乾淨 Python 環境、一個能在自己電腦上跑的 AI 模型（不用申請任何帳號、不用付費 API），以及一份可以重跑的健檢清單，確認一切就緒。</p>
 <hr/>
 <h2>你需要準備</h2>
-<ul><li>一台可以安裝軟體的筆電（Windows 或 macOS 都可以）</li><li>家裡或穩定的網路（要下載一個約 9.6GB 的模型檔）</li><li>大約 15 分鐘 + 下載等待時間</li></ul>
+<ul><li>一台可以安裝軟體的筆電（Windows 或 macOS 都可以）</li><li><strong>至少 8GB 記憶體（RAM）</strong>，建議 16GB——等一下要同時開瀏覽器、編輯器、終端機，還要跑模型</li><li>家裡或穩定的網路（要下載一個約 9.6GB 的模型檔）</li><li>大約 15 分鐘 + 下載等待時間</li></ul>
+<p>不確定自己電腦記憶體多大？</p>
+<div class="os-variant" data-os="mac"><p>點畫面左上角蘋果選單 →「關於此 Mac」，「記憶體」那欄的數字就是。</p></div>
+<div class="os-variant" data-os="windows"><p>按 <code>Windows 鍵</code> → 打「關於您的電腦」開啟設定，「已安裝的 RAM」那欄的數字就是。</p></div>
+<p>如果只有 8GB 或更少：這堂課還是可以參加，只是本機可能會跑得比較慢、甚至跑不動模型。前置作業照樣做完（Python、下載 repo、健檢），<strong>但先不用自己下載模型</strong>——當天現場會開一台共用伺服器，你只要改一行設定（<code>OLLAMA_API_BASE</code>）就能連過去用，講義裡都寫好了。</p>
 <hr/>
 <h2>步驟 1：安裝 Python</h2>
 <p>需要 Python 3.10 以上。macOS 有些版本已經內建，也可以到 <a href="https://www.python.org/downloads/">python.org</a> 下載安裝；Windows 一樣去官網下載，安裝時記得勾選「Add python.exe to PATH」。</p>
