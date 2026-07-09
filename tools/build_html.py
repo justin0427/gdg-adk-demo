@@ -245,6 +245,7 @@ body[data-os="windows"] .codeblock.has-os .codehead-label::after{content:" · Wi
 @media (max-width:560px){.os-switch{align-items:flex-start;flex-direction:column}.os-btn{min-height:44px}}
 figure{margin:1.9em 0;text-align:center}
 figure svg{width:100%;height:auto;max-width:760px}
+figure img{width:100%;height:auto;max-width:760px;border-radius:8px;border:1px solid var(--border)}
 figcaption{font-size:.88em;color:var(--muted);margin-top:.65em;line-height:1.6}
 table{border-collapse:collapse;width:100%;margin:1.3em 0;font-size:.95em}
 th,td{border:1px solid var(--border);padding:9px 13px;text-align:left;vertical-align:top}
