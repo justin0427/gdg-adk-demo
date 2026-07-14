@@ -91,18 +91,9 @@ def main():
         shown = ", ".join(models[:6]) or "（伺服器上沒有任何模型）"
         check(f"模型 {MODEL}", found, f"ollama pull {MODEL}（目前伺服器上有：{shown}）")
 
-        known_good = ("qwen", "llama3", "mistral", "gpt-oss", "hermes", "command-r")
-        risky = ("gemma4", "gemma3n", "gemma3")
-        if found and family in risky:
-            print(f"[WARN] {family} 系列在 Ollama 的 OpenAI 相容 streaming tool_calls 上有已知回報問題"
-                  "（尤其是「system prompt ＋ tools 一起用」時，這正是這堂課的用法）。"
-                  "務必用 --llm 實測，失敗就換 qwen2.5:7b 或 llama3.1:8b：ollama pull qwen2.5:7b")
-        elif found and not any(k in family for k in known_good):
-            print("[WARN] 這個模型不一定支援 tool calling，課堂建議 qwen2.5:7b 或 llama3.1:8b")
-
     # 6.（選配）實測 tool calling
-    # 特意加了 system prompt，重現「system prompt ＋ tools」這個已知較容易出問題的組合，
-    # 貼近課堂 agent.py 的真實用法（SYSTEM_INSTRUCTION ＋ 三個工具），不能只用單純 user 訊息測。
+    # 加上 system prompt 和 tools，貼近課堂 agent.py 的真實用法，
+    # 直接以實測結果確認目前模型是否能正常完成 tool calling。
     if "--llm" in sys.argv and models:
         print("-" * 56)
         print("實測 tool calling（模擬「system prompt + tools」的真實課堂用法，第一次可能要載入模型，請稍候）...")
