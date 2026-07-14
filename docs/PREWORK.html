@@ -145,25 +145,27 @@ ul.task-list{list-style:none;padding-left:0}
 <p>不確定自己電腦記憶體多大？</p>
 <div class="os-variant" data-os="mac"><p>點畫面左上角蘋果選單 →「關於此 Mac」，「記憶體」那欄的數字就是。</p></div>
 <div class="os-variant" data-os="windows"><p>按 <code>Windows 鍵</code> → 打「關於您的電腦」開啟設定，「已安裝的 RAM」那欄的數字就是。</p></div>
-<p>如果只有 8GB 或更少：下一步請改下載 <code>gemma4:e2b</code>（約 7.2GB，比 e4b 小很多，8GB 機器跑得動），一樣完全在自己電腦上跑，資料不出門；只是報告寫出來的文字品質會比 e4b 略遜一籌，工具呼叫本身沒問題，不影響上課進度。如果 e2b 也跑不動，才用共用伺服器——當天現場會開一台，改一行設定（<code>OLLAMA_API_BASE</code>）就能連過去用，講義裡都寫好了。</p>
+<p>如果只有 8GB 或更少：下一步請改下載 <code>gemma4:e2b</code>（約 7.2GB，比 e4b 小很多，8GB 機器跑得動）。e2b 的報告文字品質會比 e4b 略遜，但工具呼叫不受影響；下載後還要依下方指示設定本課程使用 e2b。如果 e2b 也跑不動，才用共用伺服器——當天現場會提供網址。</p>
 <hr/>
 <h2>步驟 1：安裝 Python</h2>
-<p>需要 Python 3.10 以上。macOS 有些版本已經內建，也可以到 <a href="https://www.python.org/downloads/">python.org</a> 下載安裝；Windows 一樣去官網下載，安裝時記得勾選「Add python.exe to PATH」。</p>
+<p>需要 <strong>Python 3.10 以上</strong>。請先確認版本，不要假設 macOS 內建的 Python 一定符合（舊版 macOS 常見 Python 3.9）。版本不足時，請到 <a href="https://www.python.org/downloads/">python.org</a> 安裝新版；Windows 安裝時記得勾選「Add python.exe to PATH」。</p>
 <div class="codeblock has-os"><div class="codehead"><span class="codehead-label">終端機</span><button class="copy-btn" type="button" aria-label="複製程式碼">複製</button></div><div class="os-variant" data-os="mac"><pre class="code"><code><span class="tok-cmd">python3</span> <span class="tok-flag">--version</span></code></pre></div><div class="os-variant" data-os="windows"><pre class="code"><code><span class="tok-cmd">python</span> <span class="tok-flag">--version</span></code></pre></div></div>
 <div class="callout info"><p><strong>確認一下</strong>：看到的版本號是 3.10 以上，代表這一步完成了。</p></div>
-<div class="callout warn"><p><strong>如果出問題</strong>：如果指令找不到（<code>command not found</code> 或 <code>不是內部或外部命令</code>），代表安裝時沒有把 Python 加進系統路徑，重新安裝一次、記得勾選加入 PATH 的選項。</p></div>
+<div class="callout warn"><p><strong>如果出問題</strong>：如果指令找不到（<code>command not found</code> 或 <code>不是內部或外部命令</code>），代表安裝時沒有把 Python 加進系統路徑，重新安裝一次、記得勾選加入 PATH 的選項；版本低於 3.10 時也請安裝新版後再建立虛擬環境。</p></div>
 <hr/>
 <h2>步驟 2：安裝 Ollama、下載模型（最花時間，請現在就做）</h2>
 <p><a href="https://ollama.com/">Ollama</a> 是讓你在自己電腦上跑 AI 模型的工具，到 <a href="https://ollama.com/download">ollama.com/download</a> 下載安裝——用上面的切換鈕選你的作業系統，看對應的安裝步驟：</p>
 <div class="os-variant" data-os="mac"><figure><img class="actual-shot" src="../images/screenshot_ollama_download_mac.png" alt="Ollama 下載頁面：選 macOS，點「Download for macOS」"/><figcaption>Ollama 下載頁面：選 macOS，點「Download for macOS」</figcaption></figure>
 <p>需要 macOS 14（Sonoma）以上。下載下來是一個 <code>.dmg</code> 檔，打開它會跳出一個磁碟視窗，把裡面的 <code>Ollama.app</code> 拖進「應用程式」（Applications）資料夾，再打開它。第一次開啟可能會跳出視窗要求把命令列工具連結加進系統路徑，按同意即可；選單列（畫面最上方）會出現一個小圖示，代表 Ollama 已經在背景執行。詳細步驟可參考<a href="https://docs.ollama.com/macos">官方文件</a>。</p></div>
 <div class="os-variant" data-os="windows"><figure><img class="actual-shot" src="../images/screenshot_ollama_download_windows.png" alt="Ollama 下載頁面：選 Windows，點「Download for Windows」"/><figcaption>Ollama 下載頁面：選 Windows，點「Download for Windows」</figcaption></figure>
-<p>下載下來是 <code>OllamaSetup.exe</code>，雙擊執行，照畫面指示一路「下一步」安裝完成——不需要系統管理員權限，學校電腦也能裝。它會自動把 <code>ollama</code> 加進使用者的系統路徑，並在背景執行（工作列會有圖示）。<strong>安裝完後請重新開一個新的終端機視窗</strong>，路徑設定才會生效；如果安裝過程跳出 Windows 防火牆詢問，選「允許」即可。詳細步驟可參考<a href="https://docs.ollama.com/windows">官方文件</a>。</p></div>
+<p>下載下來是 <code>OllamaSetup.exe</code>，雙擊執行，照畫面指示一路「下一步」安裝完成——不需要系統管理員權限，學校電腦也能裝。它會自動把 <code>ollama</code> 加進使用者的系統路徑，並在背景執行（工作列會有圖示）。如果你已開著 VS Code，<strong>請關掉再重新開啟 VS Code</strong>，讓它讀到新的路徑；只開新終端機有時還不夠。如果安裝過程跳出 Windows 防火牆詢問，選「允許」即可。詳細步驟可參考<a href="https://docs.ollama.com/windows">官方文件</a>。</p></div>
 <p>裝好後在終端機打 <code>ollama --version</code> 應該會看到版本號，代表裝好了。接著執行：</p>
 <div class="codeblock"><div class="codehead"><span class="codehead-label">終端機</span><button class="copy-btn" type="button" aria-label="複製程式碼">複製</button></div><pre class="code"><code><span class="tok-cmd">ollama</span> pull gemma4:e4b</code></pre></div>
 <p>這個模型大約 9.6GB，麻煩趁現在網路好的時候（例如在家裡）先下載完成。現場如果大家一起下載，網路很容易撐不住，你會卡在這一步乾等，錯過後面實際動手的時間。</p>
 <p>記憶體只有 8GB 或以下的人（前面「你需要準備」有提到），請改抓小一號的版本：</p>
 <div class="codeblock"><div class="codehead"><span class="codehead-label">終端機</span><button class="copy-btn" type="button" aria-label="複製程式碼">複製</button></div><pre class="code"><code><span class="tok-cmd">ollama</span> pull gemma4:e2b</code></pre></div>
+<p>接著設定本課程使用剛下載的 e2b：</p>
+<div class="codeblock has-os"><div class="codehead"><span class="codehead-label">終端機</span><button class="copy-btn" type="button" aria-label="複製程式碼">複製</button></div><div class="os-variant" data-os="mac"><pre class="code"><code><span class="tok-cmd">export</span> OLLAMA_MODEL=<span class="tok-str">&quot;gemma4:e2b&quot;</span></code></pre></div><div class="os-variant" data-os="windows"><pre class="code"><code><span class="tok-var">$env</span>:OLLAMA_MODEL = <span class="tok-str">&quot;gemma4:e2b&quot;</span></code></pre></div></div>
 <p>下載完成後，用這個指令確認模型真的到位了：</p>
 <div class="codeblock"><div class="codehead"><span class="codehead-label">終端機</span><button class="copy-btn" type="button" aria-label="複製程式碼">複製</button></div><pre class="code"><code><span class="tok-cmd">ollama</span> list</code></pre></div>
 <p>畫面會列出你電腦上所有的模型，看到剛剛下載的 <code>gemma4:e4b</code>（或 <code>gemma4:e2b</code>）出現在清單裡、SIZE 欄位有正常的數字，就代表下載成功。</p>
@@ -176,25 +178,25 @@ ul.task-list{list-style:none;padding-left:0}
 <p>下載後解壓縮，資料夾名稱會是 <code>gdg-adk-demo-main</code>，用終端機切換進去——之後的指令都要在這個資料夾裡執行（資料夾名稱不影響操作，不用特別改名）。</p>
 <hr/>
 <h2>步驟 4：建立虛擬環境、安裝套件</h2>
+<p>Windows 使用 VS Code 的同學：請在終端機右上角下拉選單確認是 <strong>PowerShell</strong>。下面 Windows 分頁的指令都以 PowerShell 為準。</p>
 <div class="codeblock has-os"><div class="codehead"><span class="codehead-label">終端機</span><button class="copy-btn" type="button" aria-label="複製程式碼">複製</button></div><div class="os-variant" data-os="mac"><pre class="code"><code><span class="tok-cmd">python3</span> <span class="tok-flag">-m</span> venv .venv
 <span class="tok-cmd">source</span> .venv/bin/activate
 <span class="tok-cmd">python3</span> <span class="tok-flag">-m</span> <span class="tok-cmd">pip</span> install <span class="tok-flag">-r</span> requirements.txt</code></pre></div><div class="os-variant" data-os="windows"><pre class="code"><code><span class="tok-cmd">python</span> <span class="tok-flag">-m</span> venv .venv
-.venv\Scripts\activate
+.\.venv\Scripts\Activate.ps1
 <span class="tok-cmd">pip</span> install <span class="tok-flag">-r</span> requirements.txt</code></pre></div></div>
 <div class="callout info"><p><strong>確認一下</strong>：指令跑完後，終端機最前面會出現 <code>(.venv)</code> 字樣，代表你已經進入這個專案專用的乾淨環境，之後裝的套件都不會影響到你電腦上其他專案。</p></div>
-<div class="callout warn"><p><strong>如果出問題</strong>：出現 <code>externally-managed-environment</code> 這個錯誤訊息，代表你忘了先執行第二行啟動虛擬環境，回到這一步重新照順序跑一次。</p></div>
+<p>Windows 終端機類型不同，啟動虛擬環境的指令也不同：VS Code 預設的 <strong>PowerShell</strong> 用 <code>.\.venv\Scripts\Activate.ps1</code>；若你刻意在 VS Code 終端機下拉選單切成 <strong>Command Prompt（CMD）</strong>，才改用 <code>.venv\Scripts\activate.bat</code>。兩者擇一，不要連續執行。</p>
+<div class="callout warn"><p><strong>如果出問題</strong>：出現 <code>externally-managed-environment</code> 這個錯誤訊息，代表你忘了先執行第二行啟動虛擬環境，回到這一步重新照順序跑一次。PowerShell 若顯示「running scripts is disabled」，先在同一個 VS Code 終端機執行 <code>Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass</code>，再重新執行啟動虛擬環境那一行；這只影響目前視窗。</p></div>
 <hr/>
 <h2>步驟 5：跑健檢，確認萬事俱備</h2>
-<div class="codeblock has-os"><div class="codehead"><span class="codehead-label">終端機</span><button class="copy-btn" type="button" aria-label="複製程式碼">複製</button></div><div class="os-variant" data-os="mac"><pre class="code"><code><span class="tok-cmd">python3</span> check_env.py</code></pre></div><div class="os-variant" data-os="windows"><pre class="code"><code><span class="tok-cmd">python</span> check_env.py</code></pre></div></div>
-<p>你會看到六項檢查結果。這時候「示範資料」那一項顯示 <code>[FAIL]</code> 是正常的——那份資料要留到上課當天現場產生，先不用管它；其他五項都應該是 <code>[OK]</code>。</p>
-<div class="callout warn"><p><strong>如果出問題</strong>：每個 <code>[FAIL]</code> 底下都會印出對應的修法，照做即可。如果是「模型」或「LLM 服務連線」沒過，先確認 Ollama 有沒有在背景執行（有些系統安裝完會自動啟動；沒有的話手動執行 <code>ollama serve</code>），再用 <code>ollama list</code> 確認 <code>gemma4:e4b</code> 真的下載完成了。</p></div>
-<p>想更確定模型能正常配合這堂課的用法（不是必要，但建議做），可以多跑一次：</p>
 <div class="codeblock has-os"><div class="codehead"><span class="codehead-label">終端機</span><button class="copy-btn" type="button" aria-label="複製程式碼">複製</button></div><div class="os-variant" data-os="mac"><pre class="code"><code><span class="tok-cmd">python3</span> check_env.py <span class="tok-flag">--llm</span></code></pre></div><div class="os-variant" data-os="windows"><pre class="code"><code><span class="tok-cmd">python</span> check_env.py <span class="tok-flag">--llm</span></code></pre></div></div>
-<p>這會實際呼叫一次模型，測試它會不會正確執行工具呼叫。第一次執行模型需要載入，可能要等一下，屬於正常現象。</p>
+<p>你會看到八項檢查結果。這時候「示範資料」那一項顯示 <code>[FAIL]</code> 是正常的——那份資料要留到上課當天現場產生，先不用管它；其他七項都應該是 <code>[OK]</code>。本機模型名稱會直接以 <code>ollama list</code> 的結果精確確認，不會把 e4b 與 e2b 混在一起。</p>
+<div class="callout warn"><p><strong>如果出問題</strong>：每個 <code>[FAIL]</code> 底下都會印出對應的修法，照做即可。如果是「模型」或「LLM 服務連線」沒過，先確認 Ollama 有沒有在背景執行（有些系統安裝完會自動啟動；沒有的話手動執行 <code>ollama serve</code>），再用 <code>ollama list</code> 確認你選的 <code>gemma4:e4b</code> 或 <code>gemma4:e2b</code> 真的下載完成了。</p></div>
+<p>這會實際呼叫一次模型，測試它會不會正確執行工具呼叫；這是課前<strong>必做</strong>的檢查。第一次執行模型需要載入，可能要等一下，屬於正常現象。</p>
 <hr/>
 <h2>前置作業檢查清單</h2>
 <p>全部完成後，你應該可以打勾以下項目：</p>
-<ul class="task-list"><li class="task-item"><label><input type="checkbox"><span>Python 3.10 以上已安裝</span></label></li><li class="task-item"><label><input type="checkbox"><span>Ollama 已安裝，<code>gemma4:e4b</code> 已下載完成</span></label></li><li class="task-item"><label><input type="checkbox"><span>課程專案已下載，虛擬環境已建立並啟動（終端機前面看得到 <code>(.venv)</code>）</span></label></li><li class="task-item"><label><input type="checkbox"><span><code>pip install -r requirements.txt</code> 執行成功</span></label></li><li class="task-item"><label><input type="checkbox"><span><code>python check_env.py</code> 除了「示範資料」以外，其他都是 <code>[OK]</code></span></label></li></ul>
+<ul class="task-list"><li class="task-item"><label><input type="checkbox"><span>Python 3.10 以上已安裝</span></label></li><li class="task-item"><label><input type="checkbox"><span>Ollama 已安裝，<code>gemma4:e4b</code> 或 <code>gemma4:e2b</code> 已下載完成；使用 e2b 者已設定 <code>OLLAMA_MODEL=gemma4:e2b</code></span></label></li><li class="task-item"><label><input type="checkbox"><span>課程專案已下載，虛擬環境已建立並啟動（終端機前面看得到 <code>(.venv)</code>）</span></label></li><li class="task-item"><label><input type="checkbox"><span><code>pip install -r requirements.txt</code> 執行成功</span></label></li><li class="task-item"><label><input type="checkbox"><span><code>python check_env.py --llm</code> 除了「示範資料」以外，其他都是 <code>[OK]</code></span></label></li></ul>
 <p>全部打勾，你就準備好了，上課當天直接帶筆電來就可以開始動手做。</p>
 <p>如果卡在任何一步都沒關係——把畫面截圖下來，提早 15 分鐘到現場，我會幫你處理，不會耽誤到你上課。</p>
 

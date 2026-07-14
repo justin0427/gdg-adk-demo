@@ -25,13 +25,13 @@
 按 `Windows 鍵` → 打「關於您的電腦」開啟設定，「已安裝的 RAM」那欄的數字就是。
 :::
 
-如果只有 8GB 或更少：下一步請改下載 `gemma4:e2b`（約 7.2GB，比 e4b 小很多，8GB 機器跑得動），一樣完全在自己電腦上跑，資料不出門；只是報告寫出來的文字品質會比 e4b 略遜一籌，工具呼叫本身沒問題，不影響上課進度。如果 e2b 也跑不動，才用共用伺服器——當天現場會開一台，改一行設定（`OLLAMA_API_BASE`）就能連過去用，講義裡都寫好了。
+如果只有 8GB 或更少：下一步請改下載 `gemma4:e2b`（約 7.2GB，比 e4b 小很多，8GB 機器跑得動）。e2b 的報告文字品質會比 e4b 略遜，但工具呼叫不受影響；下載後還要依下方指示設定本課程使用 e2b。如果 e2b 也跑不動，才用共用伺服器——當天現場會提供網址。
 
 ---
 
 ## 步驟 1：安裝 Python
 
-需要 Python 3.10 以上。macOS 有些版本已經內建，也可以到 [python.org](https://www.python.org/downloads/) 下載安裝；Windows 一樣去官網下載，安裝時記得勾選「Add python.exe to PATH」。
+需要 **Python 3.10 以上**。請先確認版本，不要假設 macOS 內建的 Python 一定符合（舊版 macOS 常見 Python 3.9）。版本不足時，請到 [python.org](https://www.python.org/downloads/) 安裝新版；Windows 安裝時記得勾選「Add python.exe to PATH」。
 
 ```bash 終端機
 python --version
@@ -39,7 +39,7 @@ python --version
 
 確認一下：看到的版本號是 3.10 以上，代表這一步完成了。
 
-如果出問題：如果指令找不到（`command not found` 或 `不是內部或外部命令`），代表安裝時沒有把 Python 加進系統路徑，重新安裝一次、記得勾選加入 PATH 的選項。
+如果出問題：如果指令找不到（`command not found` 或 `不是內部或外部命令`），代表安裝時沒有把 Python 加進系統路徑，重新安裝一次、記得勾選加入 PATH 的選項；版本低於 3.10 時也請安裝新版後再建立虛擬環境。
 
 ---
 
@@ -56,7 +56,7 @@ python --version
 ::: windows
 ![Ollama 下載頁面：選 Windows，點「Download for Windows」](../images/screenshot_ollama_download_windows.png)
 
-下載下來是 `OllamaSetup.exe`，雙擊執行，照畫面指示一路「下一步」安裝完成——不需要系統管理員權限，學校電腦也能裝。它會自動把 `ollama` 加進使用者的系統路徑，並在背景執行（工作列會有圖示）。**安裝完後請重新開一個新的終端機視窗**，路徑設定才會生效；如果安裝過程跳出 Windows 防火牆詢問，選「允許」即可。詳細步驟可參考[官方文件](https://docs.ollama.com/windows)。
+下載下來是 `OllamaSetup.exe`，雙擊執行，照畫面指示一路「下一步」安裝完成——不需要系統管理員權限，學校電腦也能裝。它會自動把 `ollama` 加進使用者的系統路徑，並在背景執行（工作列會有圖示）。如果你已開著 VS Code，**請關掉再重新開啟 VS Code**，讓它讀到新的路徑；只開新終端機有時還不夠。如果安裝過程跳出 Windows 防火牆詢問，選「允許」即可。詳細步驟可參考[官方文件](https://docs.ollama.com/windows)。
 :::
 
 裝好後在終端機打 `ollama --version` 應該會看到版本號，代表裝好了。接著執行：
@@ -71,6 +71,12 @@ ollama pull gemma4:e4b
 
 ```bash 終端機
 ollama pull gemma4:e2b
+```
+
+接著設定本課程使用剛下載的 e2b：
+
+```bash 終端機
+export OLLAMA_MODEL="gemma4:e2b"
 ```
 
 下載完成後，用這個指令確認模型真的到位了：
@@ -99,6 +105,8 @@ ollama list
 
 ## 步驟 4：建立虛擬環境、安裝套件
 
+Windows 使用 VS Code 的同學：請在終端機右上角下拉選單確認是 **PowerShell**。下面 Windows 分頁的指令都以 PowerShell 為準。
+
 ```bash 終端機
 python -m venv .venv
 .venv\Scripts\activate
@@ -107,27 +115,23 @@ pip install -r requirements.txt
 
 確認一下：指令跑完後，終端機最前面會出現 `(.venv)` 字樣，代表你已經進入這個專案專用的乾淨環境，之後裝的套件都不會影響到你電腦上其他專案。
 
-如果出問題：出現 `externally-managed-environment` 這個錯誤訊息，代表你忘了先執行第二行啟動虛擬環境，回到這一步重新照順序跑一次。
+Windows 終端機類型不同，啟動虛擬環境的指令也不同：VS Code 預設的 **PowerShell** 用 `.\.venv\Scripts\Activate.ps1`；若你刻意在 VS Code 終端機下拉選單切成 **Command Prompt（CMD）**，才改用 `.venv\Scripts\activate.bat`。兩者擇一，不要連續執行。
+
+如果出問題：出現 `externally-managed-environment` 這個錯誤訊息，代表你忘了先執行第二行啟動虛擬環境，回到這一步重新照順序跑一次。PowerShell 若顯示「running scripts is disabled」，先在同一個 VS Code 終端機執行 `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`，再重新執行啟動虛擬環境那一行；這只影響目前視窗。
 
 ---
 
 ## 步驟 5：跑健檢，確認萬事俱備
 
 ```bash 終端機
-python check_env.py
-```
-
-你會看到六項檢查結果。這時候「示範資料」那一項顯示 `[FAIL]` 是正常的——那份資料要留到上課當天現場產生，先不用管它；其他五項都應該是 `[OK]`。
-
-如果出問題：每個 `[FAIL]` 底下都會印出對應的修法，照做即可。如果是「模型」或「LLM 服務連線」沒過，先確認 Ollama 有沒有在背景執行（有些系統安裝完會自動啟動；沒有的話手動執行 `ollama serve`），再用 `ollama list` 確認 `gemma4:e4b` 真的下載完成了。
-
-想更確定模型能正常配合這堂課的用法（不是必要，但建議做），可以多跑一次：
-
-```bash 終端機
 python check_env.py --llm
 ```
 
-這會實際呼叫一次模型，測試它會不會正確執行工具呼叫。第一次執行模型需要載入，可能要等一下，屬於正常現象。
+你會看到八項檢查結果。這時候「示範資料」那一項顯示 `[FAIL]` 是正常的——那份資料要留到上課當天現場產生，先不用管它；其他七項都應該是 `[OK]`。本機模型名稱會直接以 `ollama list` 的結果精確確認，不會把 e4b 與 e2b 混在一起。
+
+如果出問題：每個 `[FAIL]` 底下都會印出對應的修法，照做即可。如果是「模型」或「LLM 服務連線」沒過，先確認 Ollama 有沒有在背景執行（有些系統安裝完會自動啟動；沒有的話手動執行 `ollama serve`），再用 `ollama list` 確認你選的 `gemma4:e4b` 或 `gemma4:e2b` 真的下載完成了。
+
+這會實際呼叫一次模型，測試它會不會正確執行工具呼叫；這是課前**必做**的檢查。第一次執行模型需要載入，可能要等一下，屬於正常現象。
 
 ---
 
@@ -136,10 +140,10 @@ python check_env.py --llm
 全部完成後，你應該可以打勾以下項目：
 
 - [ ] Python 3.10 以上已安裝
-- [ ] Ollama 已安裝，`gemma4:e4b` 已下載完成
+- [ ] Ollama 已安裝，`gemma4:e4b` 或 `gemma4:e2b` 已下載完成；使用 e2b 者已設定 `OLLAMA_MODEL=gemma4:e2b`
 - [ ] 課程專案已下載，虛擬環境已建立並啟動（終端機前面看得到 `(.venv)`）
 - [ ] `pip install -r requirements.txt` 執行成功
-- [ ] `python check_env.py` 除了「示範資料」以外，其他都是 `[OK]`
+- [ ] `python check_env.py --llm` 除了「示範資料」以外，其他都是 `[OK]`
 
 全部打勾，你就準備好了，上課當天直接帶筆電來就可以開始動手做。
 

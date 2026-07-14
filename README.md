@@ -34,14 +34,14 @@ Agent →（呼叫 get_org_detail）→ 產出含風險評分、可疑 IP 剖析
 ```bash
 # 1. 建立並啟動虛擬環境，然後安裝套件
 python -m venv .venv
-.venv\Scripts\activate
+.\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 
 # 2. 安裝 Ollama（https://ollama.com/）後下載模型
 ollama pull gemma4:e4b
 
-# 3. 環境健檢（六項一次檢查，有 FAIL 會告訴你怎麼修）
-python check_env.py
+# 3. 環境健檢（含實測 tool calling；示範資料尚未產生時顯示 FAIL 是正常的）
+python check_env.py --llm
 
 # 4. 產生合成日誌 → data/access_logs.json
 python generate_logs.py
@@ -53,7 +53,7 @@ python soc_agent/agent.py
 adk web
 ```
 
-瀏覽器開 `http://localhost:8000` → 左上選 `soc_agent` → 開始用自然語言提問。預設連本機 Ollama（`http://localhost:11434/v1`）與 `gemma4:e4b`，本機跑就**不用改任何設定**。
+瀏覽器開 `http://localhost:8000` → 左上選 `soc_agent` → 開始用自然語言提問。預設連本機 Ollama（`http://localhost:11434/v1`）與 `gemma4:e4b`；使用 `gemma4:e2b` 時，先設 `OLLAMA_MODEL=gemma4:e2b`。
 
 > `gemma4`/`gemma3n` 系列在 Ollama 的 OpenAI 相容 streaming tool_calls 上有已知回報問題（尤其 system prompt ＋ tools 一起用時，就是這支 Agent 的架構）。上場前務必用 `python check_env.py --llm` 實測過，失敗就換備用模型：`ollama pull qwen2.5:7b`（或 `llama3.1:8b`），改設 `OLLAMA_MODEL` 環境變數即可，不用動程式碼。
 

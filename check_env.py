@@ -14,6 +14,7 @@ import importlib
 import json
 import os
 import shutil
+import subprocess
 import sys
 import urllib.request
 
@@ -31,6 +32,22 @@ def check(name, ok, fix=""):
     if not ok and fix:
         print("       修法：" + fix)
     return ok
+
+
+def _local_ollama_models():
+    """用 `ollama list` 讀取本機實際已下載的模型名稱。"""
+    try:
+        result = subprocess.run(
+            ["ollama", "list"], capture_output=True, text=True, timeout=8, check=True
+        )
+    except (OSError, subprocess.SubprocessError):
+        return None
+    return [line.split()[0] for line in result.stdout.splitlines()[1:] if line.split()]
+
+
+def _model_is_installed(model, installed):
+    """指定 tag 時精確比對；未指定 tag 時接受 Ollama 的 :latest。"""
+    return model in installed or (":" not in model and f"{model}:latest" in installed)
 
 
 def main():
@@ -71,30 +88,39 @@ def main():
 
     # 5. LLM 服務連線 + 模型
     models = []
+    service_ok = False
+    model_ok = False
     try:
         req = urllib.request.Request(BASE + "/models",
                                      headers={"Authorization": "Bearer " + API_KEY})
         with urllib.request.urlopen(req, timeout=4) as r:
             payload = json.load(r)
         models = [m.get("id", "") for m in payload.get("data", [])]
-        ok = True
+        service_ok = True
     except Exception:
-        ok = False
-    check(f"LLM 服務連線（{BASE}）", ok,
+        service_ok = False
+    check(f"LLM 服務連線（{BASE}）", service_ok,
           "本機：開一個終端機執行 ollama serve；"
-          "用共用伺服器：export OLLAMA_API_BASE=\"http://<講師給的網址>:11434/v1\""
+          "用共用伺服器：macOS/Linux 輸入 export OLLAMA_API_BASE=\"http://<講師給的網址>:11434/v1\"；"
+          "Windows PowerShell 輸入 $env:OLLAMA_API_BASE = \"http://<講師給的網址>:11434/v1\""
           "（注意要寫 port，沒寫 port 預設會打到 80，連不到 Ollama）")
 
-    if models:
-        family = MODEL.split(":")[0].lower()
-        found = any(m == MODEL or m.startswith(MODEL) or family in m.lower() for m in models)
-        shown = ", ".join(models[:6]) or "（伺服器上沒有任何模型）"
-        check(f"模型 {MODEL}", found, f"ollama pull {MODEL}（目前伺服器上有：{shown}）")
+    # 本機直接以 `ollama list` 為準，避免把同家族的不同 tag 誤判為可用。
+    if BASE in ("http://localhost:11434/v1", "http://127.0.0.1:11434/v1"):
+        local_models = _local_ollama_models()
+        if local_models is not None:
+            models = local_models
+
+    if service_ok:
+        model_ok = _model_is_installed(MODEL, models)
+        shown = ", ".join(models[:6]) or "（沒有找到已下載的模型）"
+        check(f"模型 {MODEL}", model_ok,
+              f"ollama pull {MODEL}（ollama list 顯示：{shown}）")
 
     # 6.（選配）實測 tool calling
     # 加上 system prompt 和 tools，貼近課堂 agent.py 的真實用法，
     # 直接以實測結果確認目前模型是否能正常完成 tool calling。
-    if "--llm" in sys.argv and models:
+    if "--llm" in sys.argv and model_ok:
         print("-" * 56)
         print("實測 tool calling（模擬「system prompt + tools」的真實課堂用法，第一次可能要載入模型，請稍候）...")
         body = {
@@ -127,6 +153,9 @@ def main():
                      if leaked else ""))
         except Exception as e:
             check("模型支援 tool calling（含 system prompt）", False, f"呼叫失敗：{e}")
+    elif "--llm" in sys.argv:
+        check("模型支援 tool calling（含 system prompt）", False,
+              "先修正上方的模型檢查，再重新執行 python check_env.py --llm")
 
     # 總結
     print("-" * 56)
