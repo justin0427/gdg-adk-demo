@@ -95,6 +95,21 @@ ollama list
 
 ---
 
+## 使用我提供的遠端模型（本機跑不動時）
+
+如果你的電腦記憶體不足、模型下載不完，或本機 Ollama 跑得太慢，可以改用我在教室內網提供的模型。請把下面的 `<我的IP>` 換成當天公布的位址；**不要**在自己的電腦執行 `ollama serve`。
+
+```bash 終端機
+export OLLAMA_API_BASE="http://<我的IP>:11434/v1"
+export OLLAMA_MODEL="gemma4:e4b"
+```
+
+接著照原本的步驟執行 `python check_env.py --llm`。如果我公告的模型是 e2b，第二行改成 `OLLAMA_MODEL="gemma4:e2b"`；模型名稱以我提供的 `ollama list` 結果為準。
+
+注意：你和我的電腦必須在同一個 Wi-Fi/LAN，且我的電腦防火牆必須允許 11434 port。教室 Wi-Fi 若啟用了 client isolation，會無法連到我的電腦，請告訴我協助處理。
+
+---
+
 ## 步驟 3：下載課程專案
 
 點這個連結直接下載 zip：[gdg-adk-demo.zip](https://github.com/justin0427/gdg-adk-demo/archive/refs/heads/main.zip)。
@@ -127,7 +142,7 @@ Windows 終端機類型不同，啟動虛擬環境的指令也不同：VS Code �
 python check_env.py --llm
 ```
 
-你會看到八項檢查結果。這時候「示範資料」那一項顯示 `[FAIL]` 是正常的——那份資料要留到上課當天現場產生，先不用管它；其他七項都應該是 `[OK]`。本機模型名稱會直接以 `ollama list` 的結果精確確認，不會把 e4b 與 e2b 混在一起。
+你會看到八項檢查結果。這時候「示範資料」那一項顯示 `[FAIL]` 是正常的——那份資料要留到上課當天現場產生，先不用管它；其他七項都應該是 `[OK]`。
 
 如果出問題：每個 `[FAIL]` 底下都會印出對應的修法，照做即可。如果是「模型」或「LLM 服務連線」沒過，先確認 Ollama 有沒有在背景執行（有些系統安裝完會自動啟動；沒有的話手動執行 `ollama serve`），再用 `ollama list` 確認你選的 `gemma4:e4b` 或 `gemma4:e2b` 真的下載完成了。
 

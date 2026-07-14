@@ -173,6 +173,14 @@ ul.task-list{list-style:none;padding-left:0}
 <p>（範例是我自己電腦的畫面，之前測試過幾個版本所以列表比較長；你應該只會看到剛剛下載的那一個。）</p>
 <div class="callout warn"><p><strong>如果出問題</strong>：<code>ollama</code> 指令找不到，通常是安裝後沒有重開終端機（Windows 常見），關掉重開一個試試；下載很慢或中斷，換一個網路環境（例如家裡的 Wi-Fi）重試一次；<code>ollama list</code> 裡沒看到模型，代表下載沒有完成，重跑一次 <code>ollama pull</code>；真的裝不起來也沒關係，提早 15 分鐘到現場，我可以協助你改連共用伺服器，不用自己的模型也能上課。</p></div>
 <hr/>
+<h2>使用我提供的遠端模型（本機跑不動時）</h2>
+<p>如果你的電腦記憶體不足、模型下載不完，或本機 Ollama 跑得太慢，可以改用我在教室內網提供的模型。請把下面的 <code>&lt;我的IP&gt;</code> 換成當天公布的位址；<strong>不要</strong>在自己的電腦執行 <code>ollama serve</code>。</p>
+<div class="codeblock has-os"><div class="codehead"><span class="codehead-label">終端機</span><button class="copy-btn" type="button" aria-label="複製程式碼">複製</button></div><div class="os-variant" data-os="mac"><pre class="code"><code><span class="tok-cmd">export</span> OLLAMA_API_BASE=<span class="tok-str">&quot;http://&lt;我的IP&gt;:11434/v1&quot;</span>
+<span class="tok-cmd">export</span> OLLAMA_MODEL=<span class="tok-str">&quot;gemma4:e4b&quot;</span></code></pre></div><div class="os-variant" data-os="windows"><pre class="code"><code><span class="tok-var">$env</span>:OLLAMA_API_BASE = <span class="tok-str">&quot;http://&lt;我的IP&gt;:11434/v1&quot;</span>
+<span class="tok-var">$env</span>:OLLAMA_MODEL = <span class="tok-str">&quot;gemma4:e4b&quot;</span></code></pre></div></div>
+<p>接著照原本的步驟執行 <code>python check_env.py --llm</code>。如果我公告的模型是 e2b，第二行改成 <code>OLLAMA_MODEL="gemma4:e2b"</code>；模型名稱以我提供的 <code>ollama list</code> 結果為準。</p>
+<p>注意：你和我的電腦必須在同一個 Wi-Fi/LAN，且我的電腦防火牆必須允許 11434 port。教室 Wi-Fi 若啟用了 client isolation，會無法連到我的電腦，請告訴我協助處理。</p>
+<hr/>
 <h2>步驟 3：下載課程專案</h2>
 <p>點這個連結直接下載 zip：<a href="https://github.com/justin0427/gdg-adk-demo/archive/refs/heads/main.zip">gdg-adk-demo.zip</a>。</p>
 <p>下載後解壓縮，資料夾名稱會是 <code>gdg-adk-demo-main</code>，用終端機切換進去——之後的指令都要在這個資料夾裡執行（資料夾名稱不影響操作，不用特別改名）。</p>
@@ -190,7 +198,7 @@ ul.task-list{list-style:none;padding-left:0}
 <hr/>
 <h2>步驟 5：跑健檢，確認萬事俱備</h2>
 <div class="codeblock has-os"><div class="codehead"><span class="codehead-label">終端機</span><button class="copy-btn" type="button" aria-label="複製程式碼">複製</button></div><div class="os-variant" data-os="mac"><pre class="code"><code><span class="tok-cmd">python3</span> check_env.py <span class="tok-flag">--llm</span></code></pre></div><div class="os-variant" data-os="windows"><pre class="code"><code><span class="tok-cmd">python</span> check_env.py <span class="tok-flag">--llm</span></code></pre></div></div>
-<p>你會看到八項檢查結果。這時候「示範資料」那一項顯示 <code>[FAIL]</code> 是正常的——那份資料要留到上課當天現場產生，先不用管它；其他七項都應該是 <code>[OK]</code>。本機模型名稱會直接以 <code>ollama list</code> 的結果精確確認，不會把 e4b 與 e2b 混在一起。</p>
+<p>你會看到八項檢查結果。這時候「示範資料」那一項顯示 <code>[FAIL]</code> 是正常的——那份資料要留到上課當天現場產生，先不用管它；其他七項都應該是 <code>[OK]</code>。</p>
 <div class="callout warn"><p><strong>如果出問題</strong>：每個 <code>[FAIL]</code> 底下都會印出對應的修法，照做即可。如果是「模型」或「LLM 服務連線」沒過，先確認 Ollama 有沒有在背景執行（有些系統安裝完會自動啟動；沒有的話手動執行 <code>ollama serve</code>），再用 <code>ollama list</code> 確認你選的 <code>gemma4:e4b</code> 或 <code>gemma4:e2b</code> 真的下載完成了。</p></div>
 <p>這會實際呼叫一次模型，測試它會不會正確執行工具呼叫；這是課前<strong>必做</strong>的檢查。第一次執行模型需要載入，可能要等一下，屬於正常現象。</p>
 <hr/>
