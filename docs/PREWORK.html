@@ -173,13 +173,13 @@ ul.task-list{list-style:none;padding-left:0}
 <p>（範例是我自己電腦的畫面，之前測試過幾個版本所以列表比較長；你應該只會看到剛剛下載的那一個。）</p>
 <div class="callout warn"><p><strong>如果出問題</strong>：<code>ollama</code> 指令找不到，通常是安裝後沒有重開終端機（Windows 常見），關掉重開一個試試；下載很慢或中斷，換一個網路環境（例如家裡的 Wi-Fi）重試一次；<code>ollama list</code> 裡沒看到模型，代表下載沒有完成，重跑一次 <code>ollama pull</code>；真的裝不起來也沒關係，提早 15 分鐘到現場，我可以協助你改連共用伺服器，不用自己的模型也能上課。</p></div>
 <hr/>
-<h2>使用我提供的遠端模型（本機跑不動時）</h2>
-<p>如果你的電腦記憶體不足、模型下載不完，或本機 Ollama 跑得太慢，可以改用我在教室內網提供的模型。請把下面的 <code>&lt;我的IP&gt;</code> 換成當天公布的位址；<strong>不要</strong>在自己的電腦執行 <code>ollama serve</code>。</p>
-<div class="codeblock has-os"><div class="codehead"><span class="codehead-label">終端機</span><button class="copy-btn" type="button" aria-label="複製程式碼">複製</button></div><div class="os-variant" data-os="mac"><pre class="code"><code><span class="tok-cmd">export</span> OLLAMA_API_BASE=<span class="tok-str">&quot;http://&lt;我的IP&gt;:11434/v1&quot;</span>
-<span class="tok-cmd">export</span> OLLAMA_MODEL=<span class="tok-str">&quot;gemma4:e4b&quot;</span></code></pre></div><div class="os-variant" data-os="windows"><pre class="code"><code><span class="tok-var">$env</span>:OLLAMA_API_BASE = <span class="tok-str">&quot;http://&lt;我的IP&gt;:11434/v1&quot;</span>
+<h2>使用實驗室內網提供的模型（本機跑不動時）</h2>
+<p>如果你的電腦記憶體不足、模型下載不完，或本機 Ollama 跑得太慢，可以改用實驗室內網提供的模型。請把下面的 <code>&lt;實驗室主機IP&gt;</code> 換成當天公布的位址；<strong>不要</strong>在自己的電腦執行 <code>ollama serve</code>。</p>
+<div class="codeblock has-os"><div class="codehead"><span class="codehead-label">終端機</span><button class="copy-btn" type="button" aria-label="複製程式碼">複製</button></div><div class="os-variant" data-os="mac"><pre class="code"><code><span class="tok-cmd">export</span> OLLAMA_API_BASE=<span class="tok-str">&quot;http://&lt;實驗室主機IP&gt;:11434/v1&quot;</span>
+<span class="tok-cmd">export</span> OLLAMA_MODEL=<span class="tok-str">&quot;gemma4:e4b&quot;</span></code></pre></div><div class="os-variant" data-os="windows"><pre class="code"><code><span class="tok-var">$env</span>:OLLAMA_API_BASE = <span class="tok-str">&quot;http://&lt;實驗室主機IP&gt;:11434/v1&quot;</span>
 <span class="tok-var">$env</span>:OLLAMA_MODEL = <span class="tok-str">&quot;gemma4:e4b&quot;</span></code></pre></div></div>
-<p>接著照原本的步驟執行 <code>python check_env.py --llm</code>。如果我公告的模型是 e2b，第二行改成 <code>OLLAMA_MODEL="gemma4:e2b"</code>；模型名稱以我提供的 <code>ollama list</code> 結果為準。</p>
-<p>注意：你和我的電腦必須在同一個 Wi-Fi/LAN，且我的電腦防火牆必須允許 11434 port。教室 Wi-Fi 若啟用了 client isolation，會無法連到我的電腦，請告訴我協助處理。</p>
+<p>接著照原本的步驟執行 <code>python check_env.py --llm</code>。實驗室主機提供的模型固定為 <code>gemma4:e4b</code>。</p>
+<p>注意：你的電腦必須能連到實驗室內網，若無法連到實驗室主機，請告訴我協助處理。</p>
 <hr/>
 <h2>步驟 3：下載課程專案</h2>
 <p>點這個連結直接下載 zip：<a href="https://github.com/justin0427/gdg-adk-demo/archive/refs/heads/main.zip">gdg-adk-demo.zip</a>。</p>

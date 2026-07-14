@@ -95,18 +95,18 @@ ollama list
 
 ---
 
-## 使用我提供的遠端模型（本機跑不動時）
+## 使用實驗室內網提供的模型（本機跑不動時）
 
-如果你的電腦記憶體不足、模型下載不完，或本機 Ollama 跑得太慢，可以改用我在教室內網提供的模型。請把下面的 `<我的IP>` 換成當天公布的位址；**不要**在自己的電腦執行 `ollama serve`。
+如果你的電腦記憶體不足、模型下載不完，或本機 Ollama 跑得太慢，可以改用實驗室內網提供的模型。請把下面的 `<實驗室主機IP>` 換成當天公布的位址；**不要**在自己的電腦執行 `ollama serve`。
 
 ```bash 終端機
-export OLLAMA_API_BASE="http://<我的IP>:11434/v1"
+export OLLAMA_API_BASE="http://<實驗室主機IP>:11434/v1"
 export OLLAMA_MODEL="gemma4:e4b"
 ```
 
-接著照原本的步驟執行 `python check_env.py --llm`。如果我公告的模型是 e2b，第二行改成 `OLLAMA_MODEL="gemma4:e2b"`；模型名稱以我提供的 `ollama list` 結果為準。
+接著照原本的步驟執行 `python check_env.py --llm`。實驗室主機提供的模型固定為 `gemma4:e4b`。
 
-注意：你和我的電腦必須在同一個 Wi-Fi/LAN，且我的電腦防火牆必須允許 11434 port。教室 Wi-Fi 若啟用了 client isolation，會無法連到我的電腦，請告訴我協助處理。
+注意：你的電腦必須能連到實驗室內網，若無法連到實驗室主機，請告訴我協助處理。
 
 ---
 
