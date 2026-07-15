@@ -15,3 +15,6 @@ STUDENT_GUIDE.md
 STUDENT_GUIDE.html
 STUDENT_GUIDE_REVEAL.md
 STUDENT_GUIDE_REVEAL.html
+
+# 示範資料：留給學生上課當天用 generate_logs.py 現場產生，不進 repo
+data/access_logs.json
