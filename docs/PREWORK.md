@@ -116,6 +116,13 @@ export OLLAMA_MODEL="gemma4:e4b"
 
 下載後解壓縮，資料夾名稱會是 `gdg-adk-demo-main`，用終端機切換進去——之後的指令都要在這個資料夾裡執行（資料夾名稱不影響操作，不用特別改名）。
 
+熟悉 git 的話，也可以直接 clone：
+
+```bash 終端機
+git clone https://github.com/justin0427/gdg-adk-demo.git
+cd gdg-adk-demo
+```
+
 ---
 
 ## 步驟 4：建立虛擬環境、安裝套件
