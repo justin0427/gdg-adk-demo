@@ -2,7 +2,7 @@
 check_env.py — 課前 / 課中環境健檢：一個指令確認你能順利跟完整堂課。
 
 用法：
-  python check_env.py          基本健檢（六項，幾秒內跑完）
+  python check_env.py          基本健檢（七項，幾秒內跑完）
   python check_env.py --llm    加測「模型是否真的支援 tool calling」（會實際呼叫模型，較慢）
 
 環境變數（用共用伺服器時才需要設）：
