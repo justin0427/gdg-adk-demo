@@ -127,7 +127,9 @@ cd gdg-adk-demo
 
 ## 步驟 4：建立虛擬環境、安裝套件
 
-Windows 使用 VS Code 的同學：請在終端機右上角下拉選單確認是 **PowerShell**。下面 Windows 分頁的指令都以 PowerShell 為準。
+::: windows
+請在終端機右上角下拉選單確認是 **PowerShell**。下面的指令都以 PowerShell 為準。
+:::
 
 ```bash 終端機
 python -m venv .venv
@@ -137,9 +139,15 @@ pip install -r requirements.txt
 
 確認一下：指令跑完後，終端機最前面會出現 `(.venv)` 字樣，代表你已經進入這個專案專用的乾淨環境，之後裝的套件都不會影響到你電腦上其他專案。
 
-Windows 終端機類型不同，啟動虛擬環境的指令也不同：VS Code 預設的 **PowerShell** 用 `.\.venv\Scripts\Activate.ps1`；若你刻意在 VS Code 終端機下拉選單切成 **Command Prompt（CMD）**，才改用 `.venv\Scripts\activate.bat`。兩者擇一，不要連續執行。
+::: windows
+終端機類型不同，啟動虛擬環境的指令也不同：VS Code 預設的 **PowerShell** 用 `.\.venv\Scripts\Activate.ps1`；若你刻意在 VS Code 終端機下拉選單切成 **Command Prompt（CMD）**，才改用 `.venv\Scripts\activate.bat`。兩者擇一，不要連續執行。
+:::
 
-如果出問題：出現 `externally-managed-environment` 這個錯誤訊息，代表你忘了先執行第二行啟動虛擬環境，回到這一步重新照順序跑一次。PowerShell 若顯示「running scripts is disabled」，先在同一個 VS Code 終端機執行 `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`，再重新執行啟動虛擬環境那一行；這只影響目前視窗。
+如果出問題：出現 `externally-managed-environment` 這個錯誤訊息，代表你忘了先執行第二行啟動虛擬環境，回到這一步重新照順序跑一次。
+
+::: windows
+PowerShell 若顯示「running scripts is disabled」，先在同一個 VS Code 終端機執行 `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`，再重新執行啟動虛擬環境那一行；這只影響目前視窗。
+:::
 
 ---
 

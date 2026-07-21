@@ -189,15 +189,16 @@ ul.task-list{list-style:none;padding-left:0}
 <span class="tok-cmd">cd</span> gdg-adk-demo</code></pre></div>
 <hr/>
 <h2>步驟 4：建立虛擬環境、安裝套件</h2>
-<p>Windows 使用 VS Code 的同學：請在終端機右上角下拉選單確認是 <strong>PowerShell</strong>。下面 Windows 分頁的指令都以 PowerShell 為準。</p>
+<div class="os-variant" data-os="windows"><p>請在終端機右上角下拉選單確認是 <strong>PowerShell</strong>。下面的指令都以 PowerShell 為準。</p></div>
 <div class="codeblock has-os"><div class="codehead"><span class="codehead-label">終端機</span><button class="copy-btn" type="button" aria-label="複製程式碼">複製</button></div><div class="os-variant" data-os="mac"><pre class="code"><code><span class="tok-cmd">python3</span> <span class="tok-flag">-m</span> venv .venv
 <span class="tok-cmd">source</span> .venv/bin/activate
 <span class="tok-cmd">python3</span> <span class="tok-flag">-m</span> <span class="tok-cmd">pip</span> install <span class="tok-flag">-r</span> requirements.txt</code></pre></div><div class="os-variant" data-os="windows"><pre class="code"><code><span class="tok-cmd">python</span> <span class="tok-flag">-m</span> venv .venv
 .\.venv\Scripts\Activate.ps1
 <span class="tok-cmd">pip</span> install <span class="tok-flag">-r</span> requirements.txt</code></pre></div></div>
 <div class="callout info"><p><strong>確認一下</strong>：指令跑完後，終端機最前面會出現 <code>(.venv)</code> 字樣，代表你已經進入這個專案專用的乾淨環境，之後裝的套件都不會影響到你電腦上其他專案。</p></div>
-<p>Windows 終端機類型不同，啟動虛擬環境的指令也不同：VS Code 預設的 <strong>PowerShell</strong> 用 <code>.\.venv\Scripts\Activate.ps1</code>；若你刻意在 VS Code 終端機下拉選單切成 <strong>Command Prompt（CMD）</strong>，才改用 <code>.venv\Scripts\activate.bat</code>。兩者擇一，不要連續執行。</p>
-<div class="callout warn"><p><strong>如果出問題</strong>：出現 <code>externally-managed-environment</code> 這個錯誤訊息，代表你忘了先執行第二行啟動虛擬環境，回到這一步重新照順序跑一次。PowerShell 若顯示「running scripts is disabled」，先在同一個 VS Code 終端機執行 <code>Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass</code>，再重新執行啟動虛擬環境那一行；這只影響目前視窗。</p></div>
+<div class="os-variant" data-os="windows"><p>終端機類型不同，啟動虛擬環境的指令也不同：VS Code 預設的 <strong>PowerShell</strong> 用 <code>.\.venv\Scripts\Activate.ps1</code>；若你刻意在 VS Code 終端機下拉選單切成 <strong>Command Prompt（CMD）</strong>，才改用 <code>.venv\Scripts\activate.bat</code>。兩者擇一，不要連續執行。</p></div>
+<div class="callout warn"><p><strong>如果出問題</strong>：出現 <code>externally-managed-environment</code> 這個錯誤訊息，代表你忘了先執行第二行啟動虛擬環境，回到這一步重新照順序跑一次。</p></div>
+<div class="os-variant" data-os="windows"><p>PowerShell 若顯示「running scripts is disabled」，先在同一個 VS Code 終端機執行 <code>Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass</code>，再重新執行啟動虛擬環境那一行；這只影響目前視窗。</p></div>
 <hr/>
 <h2>步驟 5：跑健檢，確認萬事俱備</h2>
 <div class="codeblock has-os"><div class="codehead"><span class="codehead-label">終端機</span><button class="copy-btn" type="button" aria-label="複製程式碼">複製</button></div><div class="os-variant" data-os="mac"><pre class="code"><code><span class="tok-cmd">python3</span> check_env.py <span class="tok-flag">--llm</span></code></pre></div><div class="os-variant" data-os="windows"><pre class="code"><code><span class="tok-cmd">python</span> check_env.py <span class="tok-flag">--llm</span></code></pre></div></div>
