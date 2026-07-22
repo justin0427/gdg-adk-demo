@@ -148,17 +148,17 @@ ul.task-list{list-style:none;padding-left:0}
 <p>如果只有 8GB 或更少：下一步請改下載 <code>gemma4:e2b</code>（約 7.2GB，比 e4b 小很多，8GB 機器跑得動）。e2b 的報告文字品質會比 e4b 略遜，但工具呼叫不受影響；下載後還要依下方指示設定本課程使用 e2b。如果 e2b 也跑不動，才用共用伺服器——當天現場會提供網址。</p>
 <hr/>
 <h2>步驟 1：安裝 Python</h2>
-<p>需要 <strong>Python 3.10 以上</strong>。請先確認版本，不要假設 macOS 內建的 Python 一定符合（舊版 macOS 常見 Python 3.9）。版本不足時，請到 <a href="https://www.python.org/downloads/">python.org</a> 安裝新版；Windows 安裝時記得勾選「Add python.exe to PATH」。</p>
+<p>需要 <strong>Python 3.10 以上</strong>。請先確認版本，不要假設 macOS 內建的 Python 一定符合（舊版 macOS 常見 Python 3.9）。版本不足時，請到 <a href="https://www.python.org/downloads/" target="_blank" rel="noopener noreferrer">python.org</a> 安裝新版；Windows 安裝時記得勾選「Add python.exe to PATH」。</p>
 <div class="codeblock has-os"><div class="codehead"><span class="codehead-label">終端機</span><button class="copy-btn" type="button" aria-label="複製程式碼">複製</button></div><div class="os-variant" data-os="mac"><pre class="code"><code><span class="tok-cmd">python3</span> <span class="tok-flag">--version</span></code></pre></div><div class="os-variant" data-os="windows"><pre class="code"><code><span class="tok-cmd">python</span> <span class="tok-flag">--version</span></code></pre></div></div>
 <div class="callout info"><p><strong>確認一下</strong>：看到的版本號是 3.10 以上，代表這一步完成了。</p></div>
 <div class="callout warn"><p><strong>如果出問題</strong>：如果指令找不到（<code>command not found</code> 或 <code>不是內部或外部命令</code>），代表安裝時沒有把 Python 加進系統路徑，重新安裝一次、記得勾選加入 PATH 的選項；版本低於 3.10 時也請安裝新版後再建立虛擬環境。</p></div>
 <hr/>
 <h2>步驟 2：安裝 Ollama、下載模型（最花時間，請現在就做）</h2>
-<p><a href="https://ollama.com/">Ollama</a> 是讓你在自己電腦上跑 AI 模型的工具，到 <a href="https://ollama.com/download">ollama.com/download</a> 下載安裝——用上面的切換鈕選你的作業系統，看對應的安裝步驟：</p>
+<p><a href="https://ollama.com/" target="_blank" rel="noopener noreferrer">Ollama</a> 是讓你在自己電腦上跑 AI 模型的工具，到 <a href="https://ollama.com/download" target="_blank" rel="noopener noreferrer">ollama.com/download</a> 下載安裝——用上面的切換鈕選你的作業系統，看對應的安裝步驟：</p>
 <div class="os-variant" data-os="mac"><figure><img class="actual-shot" src="../images/screenshot_ollama_download_mac.png" alt="Ollama 下載頁面：選 macOS，點「Download for macOS」"/><figcaption>Ollama 下載頁面：選 macOS，點「Download for macOS」</figcaption></figure>
-<p>需要 macOS 14（Sonoma）以上。下載下來是一個 <code>.dmg</code> 檔，打開它會跳出一個磁碟視窗，把裡面的 <code>Ollama.app</code> 拖進「應用程式」（Applications）資料夾，再打開它。第一次開啟可能會跳出視窗要求把命令列工具連結加進系統路徑，按同意即可；選單列（畫面最上方）會出現一個小圖示，代表 Ollama 已經在背景執行。詳細步驟可參考<a href="https://docs.ollama.com/macos">官方文件</a>。</p></div>
+<p>需要 macOS 14（Sonoma）以上。下載下來是一個 <code>.dmg</code> 檔，打開它會跳出一個磁碟視窗，把裡面的 <code>Ollama.app</code> 拖進「應用程式」（Applications）資料夾，再打開它。第一次開啟可能會跳出視窗要求把命令列工具連結加進系統路徑，按同意即可；選單列（畫面最上方）會出現一個小圖示，代表 Ollama 已經在背景執行。詳細步驟可參考<a href="https://docs.ollama.com/macos" target="_blank" rel="noopener noreferrer">官方文件</a>。</p></div>
 <div class="os-variant" data-os="windows"><figure><img class="actual-shot" src="../images/screenshot_ollama_download_windows.png" alt="Ollama 下載頁面：選 Windows，點「Download for Windows」"/><figcaption>Ollama 下載頁面：選 Windows，點「Download for Windows」</figcaption></figure>
-<p>下載下來是 <code>OllamaSetup.exe</code>，雙擊執行，照畫面指示一路「下一步」安裝完成——不需要系統管理員權限，學校電腦也能裝。它會自動把 <code>ollama</code> 加進使用者的系統路徑，並在背景執行（工作列會有圖示）。如果你已開著 VS Code，<strong>請關掉再重新開啟 VS Code</strong>，讓它讀到新的路徑；只開新終端機有時還不夠。如果安裝過程跳出 Windows 防火牆詢問，選「允許」即可。詳細步驟可參考<a href="https://docs.ollama.com/windows">官方文件</a>。</p></div>
+<p>下載下來是 <code>OllamaSetup.exe</code>，雙擊執行，照畫面指示一路「下一步」安裝完成——不需要系統管理員權限，學校電腦也能裝。它會自動把 <code>ollama</code> 加進使用者的系統路徑，並在背景執行（工作列會有圖示）。如果你已開著 VS Code，<strong>請關掉再重新開啟 VS Code</strong>，讓它讀到新的路徑；只開新終端機有時還不夠。如果安裝過程跳出 Windows 防火牆詢問，選「允許」即可。詳細步驟可參考<a href="https://docs.ollama.com/windows" target="_blank" rel="noopener noreferrer">官方文件</a>。</p></div>
 <p>裝好後在終端機打 <code>ollama --version</code> 應該會看到版本號，代表裝好了。接著執行：</p>
 <div class="codeblock"><div class="codehead"><span class="codehead-label">終端機</span><button class="copy-btn" type="button" aria-label="複製程式碼">複製</button></div><pre class="code"><code><span class="tok-cmd">ollama</span> pull gemma4:e4b</code></pre></div>
 <p>這個模型大約 9.6GB，麻煩趁現在網路好的時候（例如在家裡）先下載完成。現場如果大家一起下載，網路很容易撐不住，你會卡在這一步乾等，錯過後面實際動手的時間。</p>
@@ -182,7 +182,7 @@ ul.task-list{list-style:none;padding-left:0}
 <p>注意：你的電腦必須能連到實驗室內網，若無法連到實驗室主機，請告訴我協助處理。</p>
 <hr/>
 <h2>步驟 3：下載課程專案</h2>
-<p>點這個連結直接下載 zip：<a href="https://github.com/justin0427/gdg-adk-demo/archive/refs/heads/main.zip">gdg-adk-demo.zip</a>。</p>
+<p>點這個連結直接下載 zip：<a href="https://github.com/justin0427/gdg-adk-demo/archive/refs/heads/main.zip" target="_blank" rel="noopener noreferrer">gdg-adk-demo.zip</a>。</p>
 <p>下載後解壓縮，資料夾名稱會是 <code>gdg-adk-demo-main</code>，用終端機切換進去——之後的指令都要在這個資料夾裡執行（資料夾名稱不影響操作，不用特別改名）。</p>
 <p>熟悉 git 的話，也可以直接 clone：</p>
 <div class="codeblock"><div class="codehead"><span class="codehead-label">終端機</span><button class="copy-btn" type="button" aria-label="複製程式碼">複製</button></div><pre class="code"><code><span class="tok-cmd">git</span> clone https://github.com/justin0427/gdg-adk-demo.git
