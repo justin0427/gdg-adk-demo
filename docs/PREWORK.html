@@ -87,6 +87,8 @@ pre.code code{background:none;color:inherit;padding:0;font-size:13.5px}
 .os-variant{display:none}
 body[data-os="mac"] .os-variant[data-os="mac"],
 body[data-os="windows"] .os-variant[data-os="windows"]{display:block}
+body[data-os="mac"] code .os-variant[data-os="mac"],
+body[data-os="windows"] code .os-variant[data-os="windows"]{display:inline}
 .codeblock.has-os .codehead-label::after{content:" · macOS";color:#cfd3dc}
 body[data-os="windows"] .codeblock.has-os .codehead-label::after{content:" · Windows"}
 .server-form{display:flex;flex-wrap:wrap;gap:10px;margin:1.1em 0;padding:14px;
@@ -187,7 +189,7 @@ ul.task-list{list-style:none;padding-left:0}
 <div class="codeblock has-os"><div class="codehead"><span class="codehead-label">終端機</span><button class="copy-btn" type="button" aria-label="複製程式碼">複製</button></div><div class="os-variant" data-os="mac"><pre class="code"><code><span class="tok-cmd">export</span> OLLAMA_API_BASE=<span class="tok-str">&quot;http://&lt;實驗室主機IP&gt;:11434/v1&quot;</span>
 <span class="tok-cmd">export</span> OLLAMA_MODEL=<span class="tok-str">&quot;gemma4:e4b&quot;</span></code></pre></div><div class="os-variant" data-os="windows"><pre class="code"><code><span class="tok-var">$env</span>:OLLAMA_API_BASE = <span class="tok-str">&quot;http://&lt;實驗室主機IP&gt;:11434/v1&quot;</span>
 <span class="tok-var">$env</span>:OLLAMA_MODEL = <span class="tok-str">&quot;gemma4:e4b&quot;</span></code></pre></div></div>
-<p>接著照原本的步驟執行 <code>python check_env.py --llm</code>。</p>
+<p>接著照原本的步驟執行 <code><span class="os-variant" data-os="mac">python3 check_env.py --llm</span><span class="os-variant" data-os="windows">python check_env.py --llm</span></code>。</p>
 <p>注意：你的電腦必須能連到實驗室內網，若無法連到實驗室主機，請告訴我協助處理。</p>
 <hr/>
 <h2>步驟 3：下載課程專案</h2>
@@ -217,7 +219,7 @@ ul.task-list{list-style:none;padding-left:0}
 <hr/>
 <h2>前置作業檢查清單</h2>
 <p>全部完成後，你應該可以打勾以下項目：</p>
-<ul class="task-list"><li class="task-item"><label><input type="checkbox"><span>Python 3.10 以上已安裝</span></label></li><li class="task-item"><label><input type="checkbox"><span>Ollama 已安裝，<code>gemma4:e4b</code> 或 <code>gemma4:e2b</code> 已下載完成；使用 e2b 者已設定 <code>OLLAMA_MODEL=gemma4:e2b</code></span></label></li><li class="task-item"><label><input type="checkbox"><span>課程專案已下載，虛擬環境已建立並啟動（終端機前面看得到 <code>(.venv)</code>）</span></label></li><li class="task-item"><label><input type="checkbox"><span><code>pip install -r requirements.txt</code> 執行成功</span></label></li><li class="task-item"><label><input type="checkbox"><span><code>python check_env.py --llm</code> 除了「示範資料」以外，其他都是 <code>[OK]</code></span></label></li></ul>
+<ul class="task-list"><li class="task-item"><label><input type="checkbox"><span>Python 3.10 以上已安裝</span></label></li><li class="task-item"><label><input type="checkbox"><span>Ollama 已安裝，<code>gemma4:e4b</code> 或 <code>gemma4:e2b</code> 已下載完成；使用 e2b 者已設定 <code>OLLAMA_MODEL=gemma4:e2b</code></span></label></li><li class="task-item"><label><input type="checkbox"><span>課程專案已下載，虛擬環境已建立並啟動（終端機前面看得到 <code>(.venv)</code>）</span></label></li><li class="task-item"><label><input type="checkbox"><span><code><span class="os-variant" data-os="mac">python3 -m pip install -r requirements.txt</span><span class="os-variant" data-os="windows">pip install -r requirements.txt</span></code> 執行成功</span></label></li><li class="task-item"><label><input type="checkbox"><span><code><span class="os-variant" data-os="mac">python3 check_env.py --llm</span><span class="os-variant" data-os="windows">python check_env.py --llm</span></code> 除了「示範資料」以外，其他都是 <code>[OK]</code></span></label></li></ul>
 <p>全部打勾，你就準備好了，上課當天直接帶筆電來就可以開始動手做。</p>
 <p>如果卡在任何一步都沒關係——把畫面截圖下來，提早 15 分鐘到現場，我會幫你處理，不會耽誤到你上課。</p>
 
