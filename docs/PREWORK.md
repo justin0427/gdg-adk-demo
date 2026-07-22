@@ -104,7 +104,7 @@ export OLLAMA_API_BASE="http://<實驗室主機IP>:11434/v1"
 export OLLAMA_MODEL="gemma4:e4b"
 ```
 
-接著照原本的步驟執行 `python check_env.py --llm`。實驗室主機提供的模型固定為 `gemma4:e4b`。
+接著照原本的步驟執行 `python check_env.py --llm`。
 
 注意：你的電腦必須能連到實驗室內網，若無法連到實驗室主機，請告訴我協助處理。
 
